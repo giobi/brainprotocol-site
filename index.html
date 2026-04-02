@@ -769,6 +769,30 @@ function toggleLevel() { setLevel(currentLevel === 'tech' ? 'easy' : 'tech'); }
 function toggleLang() { setLang(currentLang === 'it' ? 'en' : 'it'); }
 
 render();
+
+// Auto-fetch version from boot/brain.md on GitHub
+(function fetchVersion() {
+  fetch('https://raw.githubusercontent.com/giobi/brainprotocol/main/boot/brain.md')
+    .then(r => r.ok ? r.text() : null)
+    .then(text => {
+      if (!text) return;
+      const match = text.match(/\*\*v([\d.]+)\*\*/);
+      if (match) {
+        const ver = match[1];
+        // Update version in all language/level combos
+        ['it','en'].forEach(lang => {
+          ['tech','easy'].forEach(level => {
+            const t = T[lang][level];
+            if (t['hero.badge']) {
+              t['hero.badge'] = t['hero.badge'].replace(/v[\d.]+/, 'v' + ver);
+            }
+          });
+        });
+        render(); // re-render with updated version
+      }
+    })
+    .catch(() => {}); // silently fail, keep hardcoded version as fallback
+})();
 </script>
 </body>
 </html>
