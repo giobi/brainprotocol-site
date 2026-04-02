@@ -34,6 +34,7 @@
       font-size: 16px;
       line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      padding-bottom: 0;
     }
     a { color: var(--positive); text-decoration: none; }
     a:hover { color: var(--accent); }
@@ -43,7 +44,14 @@
       border-left: 1px solid var(--positive);
       border-right: 1px solid var(--positive);
     }
+
+    /* === TOP NAV === */
     .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(232, 228, 223, 0.92);
+      backdrop-filter: blur(12px);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -56,6 +64,106 @@
     .nav-links { display: flex; gap: 24px; align-items: center; }
     .nav-links a { color: var(--positive-muted); }
     .nav-links a:hover { color: var(--positive-bold); }
+
+    /* === AUDIENCE TOGGLE === */
+    .toggle-group {
+      display: flex;
+      border: 1px solid var(--positive);
+      border-radius: 111px;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .toggle-btn {
+      padding: 5px 14px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      color: var(--positive-muted);
+      border: none;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .toggle-btn.active {
+      background: var(--positive);
+      color: var(--negative);
+    }
+    .toggle-btn:not(.active):hover {
+      background: var(--negative-muted);
+    }
+
+    /* === LANG TOGGLE === */
+    .lang-toggle {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--positive);
+      border-radius: 111px;
+      overflow: hidden;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .lang-btn {
+      padding: 5px 10px;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--positive-muted);
+      transition: background 0.2s, color 0.2s;
+    }
+    .lang-btn.active {
+      background: var(--positive);
+      color: var(--negative);
+    }
+
+    /* === MOBILE BOTTOM NAV === */
+    .bottom-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--negative);
+      border-top: 1px solid var(--positive);
+      padding: 8px 0 calc(8px + env(safe-area-inset-bottom, 0px));
+      z-index: 100;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      backdrop-filter: blur(12px);
+      background: rgba(232, 228, 223, 0.92);
+    }
+    .bottom-nav-inner {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .bottom-nav a, .bottom-nav button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      color: var(--positive-muted);
+      text-decoration: none;
+      border: none;
+      background: transparent;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      cursor: pointer;
+      padding: 4px 8px;
+    }
+    .bottom-nav a:hover, .bottom-nav button:hover { color: var(--accent); }
+    .bottom-nav svg { width: 20px; height: 20px; }
+    .bottom-nav .level-indicator {
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 111px;
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* === BADGE === */
     .badge {
       display: inline-block;
       background: var(--positive);
@@ -68,6 +176,8 @@
       padding: 4px 15px;
       border-radius: 111px;
     }
+
+    /* === BUTTONS === */
     .btn {
       display: inline-block;
       font-family: var(--font-mono);
@@ -82,71 +192,52 @@
       text-decoration: none;
     }
     .btn:hover {
-      border-top-left-radius: 0;
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 15px 24px;
-      border-bottom-left-radius: 15px 24px;
+      border-top-left-radius: 0; border-bottom-right-radius: 0;
+      border-top-right-radius: 15px 24px; border-bottom-left-radius: 15px 24px;
       color: var(--negative);
     }
     .btn.outline { background: transparent; color: var(--positive); }
     .btn.outline:hover { background: var(--positive); color: var(--negative); }
     .btn.gradient { background: var(--gradient); border-color: var(--accent); color: #fff; }
     .btn.gradient:hover { border-color: var(--accent-alt); }
-    .hero {
-      padding: 72px 48px 80px;
-      border-bottom: 1px solid var(--positive);
-    }
+
+    /* === HERO === */
+    .hero { padding: 72px 48px 80px; border-bottom: 1px solid var(--positive); }
     .hero .badge { margin-bottom: 32px; }
     .hero h1 {
-      font-size: clamp(36px, 5vw, 66px);
-      font-weight: 600;
-      line-height: 1em;
-      letter-spacing: -0.05em;
-      color: var(--positive-bold);
-      max-width: 800px;
-      margin-bottom: 24px;
+      font-size: clamp(36px, 5vw, 66px); font-weight: 600; line-height: 1em;
+      letter-spacing: -0.05em; color: var(--positive-bold); max-width: 800px; margin-bottom: 24px;
     }
     .hero .subtitle {
-      font-size: 18px;
-      color: var(--positive-muted);
-      max-width: 560px;
-      margin-bottom: 36px;
-      line-height: 1.6;
+      font-size: 18px; color: var(--positive-muted); max-width: 560px;
+      margin-bottom: 36px; line-height: 1.6;
     }
     .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 48px; }
     .pill {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      padding: 6px 14px;
-      border: 1px solid var(--positive);
-      border-radius: 111px;
-      color: var(--positive-muted);
+      font-family: var(--font-mono); font-size: 12px; padding: 6px 14px;
+      border: 1px solid var(--positive); border-radius: 111px; color: var(--positive-muted);
     }
     .hero-cta { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* === SECTIONS === */
     .section { border-bottom: 1px solid var(--positive); }
     .section-header { padding: 48px 48px 0; }
     .section-label {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--positive-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 12px;
+      font-family: var(--font-mono); font-size: 12px; color: var(--positive-muted);
+      text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;
     }
     .section h2 {
-      font-size: clamp(24px, 3vw, 36px);
-      font-weight: 600;
-      line-height: 1.1em;
-      letter-spacing: -0.025em;
-      color: var(--positive-bold);
+      font-size: clamp(24px, 3vw, 36px); font-weight: 600;
+      line-height: 1.1em; letter-spacing: -0.025em; color: var(--positive-bold);
     }
+
     .grid-split { display: grid; grid-template-columns: 3fr 2fr; }
     .grid-split > * { padding: 48px; }
     .grid-split > *:last-child { border-left: 1px solid var(--positive); }
+
     .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
     .feature-card {
-      padding: 24px;
-      border-bottom: 1px solid var(--positive);
+      padding: 24px; border-bottom: 1px solid var(--positive);
       border-right: 1px solid var(--positive);
     }
     .feature-card:nth-child(2n) { border-right: none; }
@@ -154,99 +245,82 @@
     .feature-card .icon { width: 32px; height: 32px; margin-bottom: 12px; color: var(--accent); }
     .feature-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
     .feature-card p { font-size: 14px; color: var(--positive-muted); line-height: 1.5; }
+
     .dir-tree { font-family: var(--font-mono); font-size: 14px; line-height: 2; }
     .dir-tree .dir-name { color: var(--positive-bold); font-weight: 500; }
     .dir-tree .dir-desc { color: var(--positive-muted); font-weight: 300; }
+
     .code-block {
-      background: var(--positive-bold);
-      color: var(--negative);
-      font-family: var(--font-mono);
-      font-size: 13px;
-      line-height: 1.8;
-      padding: 32px;
-      border-radius: var(--radius-bevel);
-      overflow-x: auto;
+      background: var(--positive-bold); color: var(--negative); font-family: var(--font-mono);
+      font-size: 13px; line-height: 1.8; padding: 32px; border-radius: var(--radius-bevel); overflow-x: auto;
     }
     .code-block .key { color: #8ab9e2; }
     .code-block .string { color: #7de8b0; }
     .code-block .comment { color: #4c5159; }
     .code-block .bracket { color: #e8e4df; opacity: 0.5; }
+
     .steps-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
     .step { padding: 48px; border-right: 1px solid var(--positive); }
     .step:last-child { border-right: none; }
     .step-number {
-      font-family: var(--font-mono);
-      font-size: 48px;
-      font-weight: 300;
-      color: var(--accent);
-      margin-bottom: 16px;
-      line-height: 1;
+      font-family: var(--font-mono); font-size: 48px; font-weight: 300;
+      color: var(--accent); margin-bottom: 16px; line-height: 1;
     }
     .step h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
     .step p { font-size: 14px; color: var(--positive-muted); line-height: 1.6; }
     .step code {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      background: var(--negative-muted);
-      padding: 2px 8px;
-      border-radius: 4px;
+      font-family: var(--font-mono); font-size: 12px;
+      background: var(--negative-muted); padding: 2px 8px; border-radius: 4px;
     }
+
     .compat-section { padding: 48px; text-align: center; }
     .compat-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 32px;
-      margin-bottom: 24px;
+      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+      margin-top: 32px; margin-bottom: 24px;
     }
     .compat-chip {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      padding: 10px 20px;
-      border: 1px solid var(--positive);
-      border-radius: var(--radius-bevel);
+      font-family: var(--font-mono); font-size: 13px; padding: 10px 20px;
+      border: 1px solid var(--positive); border-radius: var(--radius-bevel);
       transition: border-radius 0.2s, background 0.2s, color 0.2s;
     }
     .compat-chip:hover {
-      background: var(--positive);
-      color: var(--negative);
-      border-top-left-radius: 0;
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 15px 24px;
-      border-bottom-left-radius: 15px 24px;
+      background: var(--positive); color: var(--negative);
+      border-top-left-radius: 0; border-bottom-right-radius: 0;
+      border-top-right-radius: 15px 24px; border-bottom-left-radius: 15px 24px;
     }
     .compat-note { font-size: 14px; color: var(--positive-muted); }
+
     .users-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
     .user-card { padding: 48px; border-right: 1px solid var(--positive); }
     .user-card:last-child { border-right: none; }
     .user-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
     .user-card .user-type {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 16px;
+      font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;
     }
     .user-card p { font-size: 14px; color: var(--positive-muted); line-height: 1.6; }
+
     .footer {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      padding: 36px 48px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--positive-muted);
+      display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 36px 48px;
+      font-family: var(--font-mono); font-size: 12px; color: var(--positive-muted);
       border-bottom: 1px solid var(--positive);
     }
     .footer-center { text-align: center; }
     .footer-right { text-align: right; }
     .footer a { color: var(--positive-muted); }
     .footer a:hover { color: var(--positive-bold); }
+
+    /* === RESPONSIVE === */
     @media (max-width: 768px) {
+      body { padding-bottom: 72px; }
       .container { max-width: 100vw; border: none; }
-      .nav { padding: 16px 24px; }
-      .nav-links { gap: 16px; }
+      .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(232, 228, 223, 0.92);
+      backdrop-filter: blur(12px); padding: 16px 24px; }
+      .nav-links .desktop-only { display: none; }
       .hero { padding: 48px 24px 56px; }
       .grid-split { grid-template-columns: 1fr; }
       .grid-split > *:last-child { border-left: none; border-top: 1px solid var(--positive); }
@@ -261,6 +335,7 @@
       .footer { grid-template-columns: 1fr; gap: 12px; text-align: left; }
       .footer-center, .footer-right { text-align: left; }
       .section-header, .grid-split > *, .compat-section, .step, .user-card { padding: 32px 24px; }
+      .bottom-nav { display: block; }
     }
   </style>
 </head>
@@ -269,18 +344,35 @@
   <nav class="nav">
     <div class="nav-logo">Brain Protocol</div>
     <div class="nav-links">
-      <a href="#spec">Spec</a>
-      <a href="#struttura">Struttura</a>
-      <a href="#start">Inizia</a>
+      <a href="#spec" class="desktop-only">Spec</a>
+      <a href="#struttura" class="desktop-only">Struttura</a>
+      <a href="#start" class="desktop-only">Inizia</a>
+
+      <div class="toggle-group" id="audience-toggle">
+        <button class="toggle-btn active" data-level="tech" onclick="setLevel('tech')">
+          <span data-t="toggle.tech"></span>
+        </button>
+        <button class="toggle-btn" data-level="easy" onclick="setLevel('easy')">
+          <span data-t="toggle.easy"></span>
+        </button>
+      </div>
+
+      <div class="lang-toggle">
+        <button class="lang-btn" data-lang="it" onclick="setLang('it')">IT</button>
+        <button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+      </div>
+
       <a href="https://github.com/giobi/brainprotocol" target="_blank" rel="noopener">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
       </a>
     </div>
   </nav>
+
+  <!-- HERO -->
   <section class="hero">
-    <span class="badge">Specifica aperta &middot; v5.1</span>
-    <h1>Dai al tuo agente AI un cervello strutturato</h1>
-    <p class="subtitle">Una specifica markdown-first per organizzare la conoscenza del tuo AI agent. Leggibile da umani, versionata con git, compatibile con qualsiasi LLM.</p>
+    <span class="badge" data-t="hero.badge"></span>
+    <h1 data-t="hero.title"></h1>
+    <p class="subtitle" data-t="hero.subtitle"></p>
     <div class="pills">
       <span class="pill">Markdown-first</span>
       <span class="pill">Git-versioned</span>
@@ -289,113 +381,95 @@
       <span class="pill">No vendor lock-in</span>
     </div>
     <div class="hero-cta">
-      <a href="#spec" class="btn outline">Leggi la spec</a>
-      <a href="https://github.com/giobi/brainprotocol" class="btn gradient" target="_blank" rel="noopener">Usa il template</a>
+      <a href="#spec" class="btn outline" data-t="hero.cta1"></a>
+      <a href="https://github.com/giobi/brainprotocol" class="btn gradient" target="_blank" rel="noopener" data-t="hero.cta2"></a>
     </div>
   </section>
+
+  <!-- SECTION 01 -->
   <section class="section" id="spec">
     <div class="section-header">
-      <div class="section-label">01 &mdash; Filosofia</div>
-      <h2>Non &egrave; un framework</h2>
+      <div class="section-label" data-t="s1.label"></div>
+      <h2 data-t="s1.title"></h2>
     </div>
     <div class="grid-split">
       <div>
-        <p style="font-size: 17px; line-height: 1.7; margin-bottom: 24px;">
-          Brain Protocol non &egrave; un software da installare. &Egrave; una <strong>convenzione</strong>: come organizzare file markdown perch&eacute; qualsiasi agente AI possa leggerli, scriverci, e accumulare conoscenza nel tempo.
-        </p>
-        <p style="font-size: 15px; color: var(--positive-muted); line-height: 1.7;">
-          Il modello AI &egrave; sostituibile &mdash; oggi Claude, domani Gemini, dopodomani qualcosa che non esiste ancora. Il brain no. Il brain &egrave; tuo: &egrave; la tua conoscenza, le tue decisioni, i tuoi progetti. Portabile, leggibile, versionato.
-        </p>
+        <p style="font-size: 17px; line-height: 1.7; margin-bottom: 24px;" data-t="s1.p1"></p>
+        <p style="font-size: 15px; color: var(--positive-muted); line-height: 1.7;" data-t="s1.p2"></p>
       </div>
       <div>
         <div class="feature-grid">
           <div class="feature-card">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            <h3>Solo testo</h3>
-            <p>Markdown puro. Nessun database, nessun formato proprietario. Apri con qualsiasi editor.</p>
+            <h3 data-t="s1.f1.title"></h3>
+            <p data-t="s1.f1.desc"></p>
           </div>
           <div class="feature-card">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><line x1="1.05" y1="12" x2="7" y2="12"/><line x1="17.01" y1="12" x2="22.96" y2="12"/></svg>
-            <h3>Git &egrave; il database</h3>
-            <p>Ogni modifica &egrave; un commit. Branching, rollback, merge &mdash; gratis.</p>
+            <h3 data-t="s1.f2.title"></h3>
+            <p data-t="s1.f2.desc"></p>
           </div>
           <div class="feature-card">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            <h3>Frontmatter = schema</h3>
-            <p>YAML in testa a ogni file. Tipo, data, tag, progetto. Struttura senza rigidit&agrave;.</p>
+            <h3 data-t="s1.f3.title"></h3>
+            <p data-t="s1.f3.desc"></p>
           </div>
           <div class="feature-card">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-            <h3>L'AI &egrave; sostituibile</h3>
-            <p>Il brain sopravvive al cambio di LLM, di piattaforma, di tutto. &Egrave; tuo per sempre.</p>
+            <h3 data-t="s1.f4.title"></h3>
+            <p data-t="s1.f4.desc"></p>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- SECTION 02 -->
   <section class="section" id="struttura">
     <div class="section-header">
-      <div class="section-label">02 &mdash; Architettura</div>
-      <h2>La struttura delle directory</h2>
+      <div class="section-label" data-t="s2.label"></div>
+      <h2 data-t="s2.title"></h2>
     </div>
     <div class="grid-split">
       <div>
-        <div class="dir-tree">
-          <div><span class="dir-name">boot/</span> <span class="dir-desc">&mdash; Chi sei, chi &egrave; l'utente, cosa puoi fare</span></div>
-          <div><span class="dir-name">wiki/</span> <span class="dir-desc">&mdash; Entit&agrave; strutturate: persone, aziende, progetti</span></div>
-          <div><span class="dir-name">diary/</span> <span class="dir-desc">&mdash; Log temporale: cosa &egrave; successo, quando, perch&eacute;</span></div>
-          <div><span class="dir-name">todo/</span> <span class="dir-desc">&mdash; Task aperti con frontmatter e tag</span></div>
-          <div><span class="dir-name">inbox/</span> <span class="dir-desc">&mdash; Punto di passaggio per roba in entrata</span></div>
-          <div><span class="dir-name">public/</span> <span class="dir-desc">&mdash; File pubblicati, serviti via web</span></div>
-          <div><span class="dir-name">storage/</span> <span class="dir-desc">&mdash; Temporanei, cache, file non strutturati</span></div>
-          <div><span class="dir-name">.env</span> <span class="dir-desc">&mdash; Credenziali (sempre gitignored)</span></div>
-        </div>
+        <div class="dir-tree" id="dir-tree"></div>
       </div>
       <div>
-        <div class="code-block"><span class="comment"># Ogni file .md ha un frontmatter YAML</span>
-<span class="bracket">---</span>
-<span class="key">type</span>: <span class="string">diary</span>
-<span class="key">date</span>: <span class="string">'2026-04-02'</span>
-<span class="key">project</span>: <span class="string">brainprotocol</span>
-<span class="key">created_with</span>: <span class="string">claude-sonnet</span>
-<span class="key">tags</span>:
-  - <span class="string">meeting</span>
-  - <span class="string">decisioni</span>
-  - <span class="string">architettura</span>
-<span class="bracket">---</span>
-
-<span class="comment"># Il contenuto &egrave; markdown standard</span>
-<span class="comment"># Wiki-links: [[wiki/people/mario-rossi]]</span></div>
+        <div class="code-block" id="code-example"></div>
       </div>
     </div>
   </section>
+
+  <!-- SECTION 03 -->
   <section class="section" id="start">
     <div class="section-header" style="padding-bottom: 0;">
-      <div class="section-label">03 &mdash; Getting started</div>
-      <h2>Tre passi per iniziare</h2>
+      <div class="section-label" data-t="s3.label"></div>
+      <h2 data-t="s3.title"></h2>
     </div>
     <div class="steps-grid">
       <div class="step">
         <div class="step-number">01</div>
-        <h3>Clona il template</h3>
-        <p>Un <code>git clone</code> e sei operativo. Apri la cartella con il tuo AI agent preferito &mdash; Claude Code, Cursor, Aider, qualsiasi cosa legga file.</p>
+        <h3 data-t="s3.s1.title"></h3>
+        <p data-t="s3.s1.desc"></p>
       </div>
       <div class="step">
         <div class="step-number">02</div>
-        <h3>Rispondi alle domande</h3>
-        <p>L'onboarding interattivo ti chiede chi sei, cosa fai, come vuoi che l'agente si comporti. Genera automaticamente i file in <code>boot/</code>.</p>
+        <h3 data-t="s3.s2.title"></h3>
+        <p data-t="s3.s2.desc"></p>
       </div>
       <div class="step">
         <div class="step-number">03</div>
-        <h3>Usa il brain</h3>
-        <p>Ogni sessione l'agente legge <code>boot/</code>, sa chi sei, accumula conoscenza in <code>wiki/</code> e <code>diary/</code>. Il brain cresce con te.</p>
+        <h3 data-t="s3.s3.title"></h3>
+        <p data-t="s3.s3.desc"></p>
       </div>
     </div>
   </section>
+
+  <!-- SECTION 04 -->
   <section class="section">
     <div class="compat-section">
-      <div class="section-label">04 &mdash; Compatibilit&agrave;</div>
-      <h2>Funziona con qualsiasi LLM</h2>
+      <div class="section-label" data-t="s4.label"></div>
+      <h2 data-t="s4.title"></h2>
       <div class="compat-grid">
         <span class="compat-chip">Claude</span>
         <span class="compat-chip">Gemini</span>
@@ -406,32 +480,35 @@
         <span class="compat-chip">Aider</span>
         <span class="compat-chip">Codex CLI</span>
       </div>
-      <p class="compat-note">Se il tuo agent legge file markdown, &egrave; compatibile con Brain Protocol.</p>
+      <p class="compat-note" data-t="s4.note"></p>
     </div>
   </section>
+
+  <!-- SECTION 05 -->
   <section class="section">
     <div class="section-header">
-      <div class="section-label">05 &mdash; Ecosistema</div>
-      <h2>Chi lo usa</h2>
+      <div class="section-label" data-t="s5.label"></div>
+      <h2 data-t="s5.title"></h2>
     </div>
     <div class="users-grid">
       <div class="user-card">
         <h3>ABChat</h3>
-        <div class="user-type">Piattaforma SaaS</div>
-        <p>Brain as a Service. Hosting, WebSSH, skill marketplace, onboarding automatico. Il modo pi&ugrave; veloce per avere il tuo brain operativo.</p>
+        <div class="user-type" data-t="s5.u1.type"></div>
+        <p data-t="s5.u1.desc"></p>
       </div>
       <div class="user-card">
         <h3>EmiBrain</h3>
-        <div class="user-type">Enterprise</div>
-        <p>AI adoption per Emisfera cooperativa. Ogni dipendente ha il suo brain personale con workspace Docker isolato.</p>
+        <div class="user-type" data-t="s5.u2.type"></div>
+        <p data-t="s5.u2.desc"></p>
       </div>
       <div class="user-card">
-        <h3>Il tuo progetto</h3>
+        <h3 data-t="s5.u3.name"></h3>
         <div class="user-type">Open source</div>
-        <p>Clona il template, rispondi alle domande, inizia. Zero infrastruttura richiesta &mdash; basta git e un AI agent.</p>
+        <p data-t="s5.u3.desc"></p>
       </div>
     </div>
   </section>
+
   <footer class="footer">
     <div>Brain Protocol &copy; 2026</div>
     <div class="footer-center">
@@ -444,5 +521,235 @@
     </div>
   </footer>
 </div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <a href="#spec">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Spec
+    </a>
+    <a href="#struttura">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Struttura
+    </a>
+    <a href="#start">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Inizia
+    </a>
+    <button onclick="toggleLevel()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span class="level-indicator" id="mobile-level">PRO</span>
+    </button>
+    <button onclick="toggleLang()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span id="mobile-lang">IT</span>
+    </button>
+  </div>
+</nav>
+
+<script>
+const T = {
+  it: {
+    tech: {
+      "toggle.tech": "Pro", "toggle.easy": "Easy",
+      "hero.badge": "Specifica aperta \u00b7 v5.1",
+      "hero.title": "Dai al tuo agente AI un cervello strutturato",
+      "hero.subtitle": "Una specifica markdown-first per organizzare la conoscenza del tuo AI agent. Leggibile da umani, versionata con git, compatibile con qualsiasi LLM.",
+      "hero.cta1": "Leggi la spec", "hero.cta2": "Usa il template",
+      "s1.label": "01 \u2014 Filosofia", "s1.title": "Non \u00e8 un framework",
+      "s1.p1": "Brain Protocol non \u00e8 un software da installare. \u00c8 una <strong>convenzione</strong>: come organizzare file markdown perch\u00e9 qualsiasi agente AI possa leggerli, scriverci, e accumulare conoscenza nel tempo.",
+      "s1.p2": "Il modello AI \u00e8 sostituibile \u2014 oggi Claude, domani Gemini, dopodomani qualcosa che non esiste ancora. Il brain no. Il brain \u00e8 tuo: \u00e8 la tua conoscenza, le tue decisioni, i tuoi progetti. Portabile, leggibile, versionato.",
+      "s1.f1.title": "Solo testo", "s1.f1.desc": "Markdown puro. Nessun database, nessun formato proprietario. Apri con qualsiasi editor.",
+      "s1.f2.title": "Git \u00e8 il database", "s1.f2.desc": "Ogni modifica \u00e8 un commit. Branching, rollback, merge \u2014 gratis.",
+      "s1.f3.title": "Frontmatter = schema", "s1.f3.desc": "YAML in testa a ogni file. Tipo, data, tag, progetto. Struttura senza rigidit\u00e0.",
+      "s1.f4.title": "L'AI \u00e8 sostituibile", "s1.f4.desc": "Il brain sopravvive al cambio di LLM, di piattaforma, di tutto. \u00c8 tuo per sempre.",
+      "s2.label": "02 \u2014 Architettura", "s2.title": "La struttura delle directory",
+      "s3.label": "03 \u2014 Getting started", "s3.title": "Tre passi per iniziare",
+      "s3.s1.title": "Clona il template", "s3.s1.desc": "Un <code>git clone</code> e sei operativo. Apri la cartella con il tuo AI agent preferito \u2014 Claude Code, Cursor, Aider, qualsiasi cosa legga file.",
+      "s3.s2.title": "Rispondi alle domande", "s3.s2.desc": "L'onboarding interattivo ti chiede chi sei, cosa fai, come vuoi che l'agente si comporti. Genera automaticamente i file in <code>boot/</code>.",
+      "s3.s3.title": "Usa il brain", "s3.s3.desc": "Ogni sessione l'agente legge <code>boot/</code>, sa chi sei, accumula conoscenza in <code>wiki/</code> e <code>diary/</code>. Il brain cresce con te.",
+      "s4.label": "04 \u2014 Compatibilit\u00e0", "s4.title": "Funziona con qualsiasi LLM",
+      "s4.note": "Se il tuo agent legge file markdown, \u00e8 compatibile con Brain Protocol.",
+      "s5.label": "05 \u2014 Ecosistema", "s5.title": "Chi lo usa",
+      "s5.u1.type": "Piattaforma SaaS", "s5.u1.desc": "Brain as a Service. Hosting, WebSSH, skill marketplace, onboarding automatico. Il modo pi\u00f9 veloce per avere il tuo brain operativo.",
+      "s5.u2.type": "Enterprise", "s5.u2.desc": "AI adoption per Emisfera cooperativa. Ogni dipendente ha il suo brain personale con workspace Docker isolato.",
+      "s5.u3.name": "Il tuo progetto", "s5.u3.desc": "Clona il template, rispondi alle domande, inizia. Zero infrastruttura richiesta \u2014 basta git e un AI agent.",
+      "dir": [
+        ["boot/", "Identit\u00e0 dell'agente, profilo utente, configurazione"],
+        ["wiki/", "Entit\u00e0 strutturate: persone, aziende, progetti"],
+        ["diary/", "Log temporale: cosa \u00e8 successo, quando, perch\u00e9"],
+        ["todo/", "Task aperti con frontmatter e tag"],
+        ["inbox/", "Punto di passaggio per roba in entrata"],
+        ["public/", "File pubblicati, serviti via web"],
+        ["storage/", "Temporanei, cache, file non strutturati"],
+        [".env", "Credenziali (sempre gitignored)"]
+      ],
+      "code": "<span class='comment'># Ogni file .md ha un frontmatter YAML</span>\n<span class='bracket'>---</span>\n<span class='key'>type</span>: <span class='string'>diary</span>\n<span class='key'>date</span>: <span class='string'>'2026-04-02'</span>\n<span class='key'>project</span>: <span class='string'>brainprotocol</span>\n<span class='key'>created_with</span>: <span class='string'>claude-sonnet</span>\n<span class='key'>tags</span>:\n  - <span class='string'>meeting</span>\n  - <span class='string'>decisioni</span>\n<span class='bracket'>---</span>\n\n<span class='comment'># Wiki-links: [[wiki/people/mario-rossi]]</span>"
+    },
+    easy: {
+      "toggle.tech": "Pro", "toggle.easy": "Easy",
+      "hero.badge": "Specifica aperta \u00b7 v5.1",
+      "hero.title": "Il tuo assistente AI che non dimentica",
+      "hero.subtitle": "Una cartella di file organizzati che permette al tuo assistente AI di ricordarsi chi sei, cosa fai e su cosa stai lavorando. Funziona con qualsiasi AI.",
+      "hero.cta1": "Scopri come funziona", "hero.cta2": "Prova gratis",
+      "s1.label": "01 \u2014 L'idea", "s1.title": "Come un quaderno, ma intelligente",
+      "s1.p1": "Ogni volta che parli con ChatGPT, Claude o qualsiasi AI, lui si dimentica tutto alla sessione dopo. Brain Protocol risolve questo: \u00e8 una <strong>cartella organizzata</strong> che l'AI legge all'inizio di ogni conversazione per sapere chi sei e cosa stai facendo.",
+      "s1.p2": "Non importa quale AI usi oggi \u2014 puoi cambiare quando vuoi. I tuoi appunti, i tuoi progetti, le tue decisioni restano tuoi per sempre. Nessun abbonamento, nessun lock-in, solo file di testo.",
+      "s1.f1.title": "File di testo", "s1.f1.desc": "Niente app complicate. Solo file che puoi aprire con qualsiasi programma, anche il Blocco Note.",
+      "s1.f2.title": "Salvataggio automatico", "s1.f2.desc": "Ogni cambiamento viene salvato con la cronologia. Puoi tornare indietro a qualsiasi momento.",
+      "s1.f3.title": "Organizzato", "s1.f3.desc": "Un'intestazione in cima a ogni file dice che tipo di appunto \u00e8. L'AI capisce subito cosa sta leggendo.",
+      "s1.f4.title": "Cambia AI quando vuoi", "s1.f4.desc": "Funziona con Claude, ChatGPT, Gemini e tutti gli altri. Non sei legato a nessuno.",
+      "s2.label": "02 \u2014 Cosa c'\u00e8 dentro", "s2.title": "Le cartelle del tuo brain",
+      "s3.label": "03 \u2014 Come si inizia", "s3.title": "Tre passi e sei operativo",
+      "s3.s1.title": "Scarica il template", "s3.s1.desc": "Copi una cartella gi\u00e0 pronta sul tuo computer. Ci vogliono 30 secondi.",
+      "s3.s2.title": "Presentati all'AI", "s3.s2.desc": "L'AI ti fa qualche domanda: come ti chiami, che lavoro fai, come vuoi che ti parli. Poi si configura da solo.",
+      "s3.s3.title": "Inizia a usarlo", "s3.s3.desc": "Da adesso ogni conversazione con l'AI lascia una traccia: appunti, decisioni, cose da fare. La prossima volta, lui gi\u00e0 sa tutto.",
+      "s4.label": "04 \u2014 Compatibilit\u00e0", "s4.title": "Funziona con tutti",
+      "s4.note": "Se la tua AI pu\u00f2 leggere file di testo, funziona con Brain Protocol.",
+      "s5.label": "05 \u2014 Chi lo usa gi\u00e0", "s5.title": "Chi lo usa",
+      "s5.u1.type": "Per tutti", "s5.u1.desc": "Un servizio online che ti d\u00e0 il brain gi\u00e0 pronto, senza installare niente. Apri il browser e inizi.",
+      "s5.u2.type": "Per le aziende", "s5.u2.desc": "Un'azienda cooperativa dove ogni dipendente ha il suo assistente AI personale con il suo brain privato.",
+      "s5.u3.name": "Per te", "s5.u3.desc": "Scarica la cartella, rispondi a qualche domanda, e il tuo assistente AI inizia a ricordarsi di te.",
+      "dir": [
+        ["boot/", "Chi sei e come vuoi che l'AI si comporti"],
+        ["wiki/", "La tua rubrica: persone, aziende, progetti"],
+        ["diary/", "Il tuo diario: cosa hai fatto e quando"],
+        ["todo/", "La tua lista delle cose da fare"],
+        ["inbox/", "Roba nuova da smistare"],
+        ["public/", "Cose che vuoi condividere con altri"],
+        ["storage/", "File temporanei e vari"],
+        [".env", "Le tue password (protette)"]
+      ],
+      "code": "<span class='comment'># Ogni file ha un'intestazione che dice all'AI</span>\n<span class='comment'># cosa sta leggendo</span>\n<span class='bracket'>---</span>\n<span class='key'>tipo</span>: <span class='string'>diario</span>\n<span class='key'>data</span>: <span class='string'>'2 aprile 2026'</span>\n<span class='key'>progetto</span>: <span class='string'>il mio sito web</span>\n<span class='key'>parole chiave</span>:\n  - <span class='string'>riunione</span>\n  - <span class='string'>decisioni</span>\n<span class='bracket'>---</span>\n\n<span class='comment'># Poi scrivi quello che vuoi, in italiano</span>"
+    }
+  },
+  en: {
+    tech: {
+      "toggle.tech": "Pro", "toggle.easy": "Easy",
+      "hero.badge": "Open specification \u00b7 v5.1",
+      "hero.title": "Give your AI agent a structured brain",
+      "hero.subtitle": "A markdown-first specification for organizing your AI agent's knowledge. Human-readable, git-versioned, compatible with any LLM.",
+      "hero.cta1": "Read the spec", "hero.cta2": "Use the template",
+      "s1.label": "01 \u2014 Philosophy", "s1.title": "Not a framework",
+      "s1.p1": "Brain Protocol is not software you install. It's a <strong>convention</strong>: how to organize markdown files so any AI agent can read them, write to them, and accumulate knowledge over time.",
+      "s1.p2": "The AI model is replaceable \u2014 Claude today, Gemini tomorrow, something that doesn't exist yet the day after. The brain isn't. The brain is yours: your knowledge, your decisions, your projects. Portable, readable, versioned.",
+      "s1.f1.title": "Plain text", "s1.f1.desc": "Pure markdown. No database, no proprietary format. Open with any editor.",
+      "s1.f2.title": "Git is the database", "s1.f2.desc": "Every change is a commit. Branching, rollback, merge \u2014 for free.",
+      "s1.f3.title": "Frontmatter = schema", "s1.f3.desc": "YAML at the top of every file. Type, date, tags, project. Structure without rigidity.",
+      "s1.f4.title": "The AI is replaceable", "s1.f4.desc": "The brain survives LLM changes, platform changes, everything. It's yours forever.",
+      "s2.label": "02 \u2014 Architecture", "s2.title": "Directory structure",
+      "s3.label": "03 \u2014 Getting started", "s3.title": "Three steps to start",
+      "s3.s1.title": "Clone the template", "s3.s1.desc": "A <code>git clone</code> and you're ready. Open the folder with your favorite AI agent \u2014 Claude Code, Cursor, Aider, anything that reads files.",
+      "s3.s2.title": "Answer the questions", "s3.s2.desc": "The interactive onboarding asks who you are, what you do, how you want the agent to behave. It auto-generates the files in <code>boot/</code>.",
+      "s3.s3.title": "Use the brain", "s3.s3.desc": "Every session the agent reads <code>boot/</code>, knows who you are, accumulates knowledge in <code>wiki/</code> and <code>diary/</code>. The brain grows with you.",
+      "s4.label": "04 \u2014 Compatibility", "s4.title": "Works with any LLM",
+      "s4.note": "If your agent can read markdown files, it's compatible with Brain Protocol.",
+      "s5.label": "05 \u2014 Ecosystem", "s5.title": "Who uses it",
+      "s5.u1.type": "SaaS Platform", "s5.u1.desc": "Brain as a Service. Hosting, WebSSH, skill marketplace, automatic onboarding. The fastest way to get your brain running.",
+      "s5.u2.type": "Enterprise", "s5.u2.desc": "AI adoption for Emisfera cooperative. Every employee gets their own personal brain with isolated Docker workspace.",
+      "s5.u3.name": "Your project", "s5.u3.desc": "Clone the template, answer the questions, start. Zero infrastructure required \u2014 just git and an AI agent.",
+      "dir": [
+        ["boot/", "Agent identity, user profile, configuration"],
+        ["wiki/", "Structured entities: people, companies, projects"],
+        ["diary/", "Temporal log: what happened, when, why"],
+        ["todo/", "Open tasks with frontmatter and tags"],
+        ["inbox/", "Staging area for incoming stuff"],
+        ["public/", "Published files, served via web"],
+        ["storage/", "Temporary files, cache, unstructured data"],
+        [".env", "Credentials (always gitignored)"]
+      ],
+      "code": "<span class='comment'># Every .md file has YAML frontmatter</span>\n<span class='bracket'>---</span>\n<span class='key'>type</span>: <span class='string'>diary</span>\n<span class='key'>date</span>: <span class='string'>'2026-04-02'</span>\n<span class='key'>project</span>: <span class='string'>brainprotocol</span>\n<span class='key'>created_with</span>: <span class='string'>claude-sonnet</span>\n<span class='key'>tags</span>:\n  - <span class='string'>meeting</span>\n  - <span class='string'>decisions</span>\n<span class='bracket'>---</span>\n\n<span class='comment'># Wiki-links: [[wiki/people/john-doe]]</span>"
+    },
+    easy: {
+      "toggle.tech": "Pro", "toggle.easy": "Easy",
+      "hero.badge": "Open specification \u00b7 v5.1",
+      "hero.title": "Your AI assistant that never forgets",
+      "hero.subtitle": "An organized folder of files that lets your AI assistant remember who you are, what you do, and what you're working on. Works with any AI.",
+      "hero.cta1": "See how it works", "hero.cta2": "Try it free",
+      "s1.label": "01 \u2014 The idea", "s1.title": "Like a notebook, but smart",
+      "s1.p1": "Every time you talk to ChatGPT, Claude, or any AI, it forgets everything next session. Brain Protocol fixes this: it's an <strong>organized folder</strong> that the AI reads at the start of every conversation to know who you are and what you're working on.",
+      "s1.p2": "It doesn't matter which AI you use today \u2014 you can switch anytime. Your notes, projects, and decisions stay yours forever. No subscription, no lock-in, just text files.",
+      "s1.f1.title": "Text files", "s1.f1.desc": "No complicated apps. Just files you can open with anything, even Notepad.",
+      "s1.f2.title": "Auto-saved history", "s1.f2.desc": "Every change is saved with full history. You can go back to any point in time.",
+      "s1.f3.title": "Organized", "s1.f3.desc": "A header at the top of each file tells the AI what it's reading. It understands instantly.",
+      "s1.f4.title": "Switch AI anytime", "s1.f4.desc": "Works with Claude, ChatGPT, Gemini and all the others. You're not locked in.",
+      "s2.label": "02 \u2014 What's inside", "s2.title": "Your brain's folders",
+      "s3.label": "03 \u2014 How to start", "s3.title": "Three steps and you're set",
+      "s3.s1.title": "Download the template", "s3.s1.desc": "Copy a ready-made folder to your computer. Takes 30 seconds.",
+      "s3.s2.title": "Introduce yourself", "s3.s2.desc": "The AI asks a few questions: your name, your job, how you want it to talk to you. Then it sets itself up.",
+      "s3.s3.title": "Start using it", "s3.s3.desc": "From now on, every conversation with your AI leaves a trace: notes, decisions, to-dos. Next time, it already knows everything.",
+      "s4.label": "04 \u2014 Compatibility", "s4.title": "Works with everyone",
+      "s4.note": "If your AI can read text files, it works with Brain Protocol.",
+      "s5.label": "05 \u2014 Who uses it", "s5.title": "Who uses it",
+      "s5.u1.type": "For everyone", "s5.u1.desc": "An online service that gives you a ready-made brain, no installation needed. Open your browser and start.",
+      "s5.u2.type": "For companies", "s5.u2.desc": "A cooperative where every employee has their own personal AI assistant with a private brain.",
+      "s5.u3.name": "For you", "s5.u3.desc": "Download the folder, answer a few questions, and your AI assistant starts remembering you.",
+      "dir": [
+        ["boot/", "Who you are and how you want the AI to behave"],
+        ["wiki/", "Your address book: people, companies, projects"],
+        ["diary/", "Your journal: what you did and when"],
+        ["todo/", "Your to-do list"],
+        ["inbox/", "New stuff to sort through"],
+        ["public/", "Things you want to share with others"],
+        ["storage/", "Temporary and miscellaneous files"],
+        [".env", "Your passwords (protected)"]
+      ],
+      "code": "<span class='comment'># Every file has a header that tells the AI</span>\n<span class='comment'># what it's reading</span>\n<span class='bracket'>---</span>\n<span class='key'>type</span>: <span class='string'>journal</span>\n<span class='key'>date</span>: <span class='string'>'April 2, 2026'</span>\n<span class='key'>project</span>: <span class='string'>my website</span>\n<span class='key'>keywords</span>:\n  - <span class='string'>meeting</span>\n  - <span class='string'>decisions</span>\n<span class='bracket'>---</span>\n\n<span class='comment'># Then write whatever you want</span>"
+    }
+  }
+};
+
+let currentLang = navigator.language.startsWith('it') ? 'it' : 'en';
+let currentLevel = 'tech';
+
+function render() {
+  const t = T[currentLang][currentLevel];
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+
+  // Dir tree
+  const dirEl = document.getElementById('dir-tree');
+  if (dirEl && t.dir) {
+    dirEl.innerHTML = t.dir.map(([name, desc]) =>
+      `<div><span class="dir-name">${name}</span> <span class="dir-desc">&mdash; ${desc}</span></div>`
+    ).join('');
+  }
+
+  // Code block
+  const codeEl = document.getElementById('code-example');
+  if (codeEl && t.code) codeEl.innerHTML = t.code;
+
+  // Active states
+  document.querySelectorAll('.toggle-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.level === currentLevel);
+  });
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === currentLang);
+  });
+
+  // Mobile indicators
+  const mi = document.getElementById('mobile-level');
+  if (mi) mi.textContent = currentLevel === 'tech' ? 'PRO' : 'EASY';
+  const ml = document.getElementById('mobile-lang');
+  if (ml) ml.textContent = currentLang.toUpperCase();
+
+  // Title
+  document.title = currentLang === 'it'
+    ? 'Brain Protocol \u2014 Specifica aperta per workspace AI'
+    : 'Brain Protocol \u2014 Open specification for AI agent workspaces';
+
+  document.documentElement.lang = currentLang;
+}
+
+function setLang(l) { currentLang = l; render(); }
+function setLevel(l) { currentLevel = l; render(); }
+function toggleLevel() { setLevel(currentLevel === 'tech' ? 'easy' : 'tech'); }
+function toggleLang() { setLang(currentLang === 'it' ? 'en' : 'it'); }
+
+render();
+</script>
 </body>
 </html>
