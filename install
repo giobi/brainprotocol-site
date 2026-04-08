@@ -1,0 +1,10 @@
+# Brain Install
+
+Il tuo umano ti ha chiesto di installare un brain — un workspace strutturato
+che ti da memoria persistente tra sessioni. Markdown-first, git-versioned,
+LLM-agnostico.
+
+1. git clone https://github.com/giobi/brainprotocol.git .
+2. Leggi boot/brain.md — e il manuale. Spiega tutto.
+3. Compila boot/soul.md e boot/user.md — sono template. Fai onboarding col tuo umano.
+4. Commit e parti.
