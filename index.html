@@ -337,6 +337,45 @@
       .section-header, .grid-split > *, .compat-section, .step, .user-card { padding: 32px 24px; }
       .bottom-nav { display: block; }
     }
+  
+    /* === WESP SECTION === */
+    .wesp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .wesp-card {
+      padding: 24px;
+      border: 1px solid var(--positive);
+      border-radius: var(--radius-bevel);
+      position: relative;
+    }
+    .wesp-card h3 { font-size: 15px; margin-bottom: 6px; }
+    .wesp-card p { font-size: 13px; color: var(--positive-muted); line-height: 1.5; margin-bottom: 8px; }
+    .wesp-card code { font-family: var(--font-mono); font-size: 12px; color: var(--accent); }
+    .wesp-letter {
+      font-family: var(--font-mono);
+      font-size: 28px;
+      font-weight: 500;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+    .wesp-sources {
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--positive-muted);
+      margin-top: 32px;
+      padding: 16px 48px;
+    }
+    @media (max-width: 768px) {
+      .wesp-grid { grid-template-columns: 1fr; }
+    }
+
   </style>
 </head>
 <body>
@@ -347,6 +386,7 @@
       <a href="#spec" class="desktop-only">Spec</a>
       <a href="#struttura" class="desktop-only">Struttura</a>
       <a href="#start" class="desktop-only">Inizia</a>
+      <a href="#wesp" class="desktop-only">WESP</a>
 
       <div class="toggle-group" id="audience-toggle">
         <button class="toggle-btn active" data-level="tech" onclick="setLevel('tech')">
@@ -440,6 +480,50 @@
     </div>
   </section>
 
+
+  <!-- SECTION WESP -->
+  <section class="section" id="wesp">
+    <div class="section-header">
+      <div class="section-label" data-t="sw.label"></div>
+      <h2 data-t="sw.title"></h2>
+    </div>
+    <div class="grid-split">
+      <div>
+        <p style="font-size: 17px; line-height: 1.7; margin-bottom: 24px;" data-t="sw.p1"></p>
+        <p style="font-size: 15px; color: var(--positive-muted); line-height: 1.7;" data-t="sw.p2"></p>
+      </div>
+      <div>
+        <div class="wesp-grid">
+          <div class="wesp-card">
+            <div class="wesp-letter">W</div>
+            <h3 data-t="sw.w.title"></h3>
+            <p data-t="sw.w.desc"></p>
+            <code data-t="sw.w.maps"></code>
+          </div>
+          <div class="wesp-card">
+            <div class="wesp-letter">E</div>
+            <h3 data-t="sw.e.title"></h3>
+            <p data-t="sw.e.desc"></p>
+            <code data-t="sw.e.maps"></code>
+          </div>
+          <div class="wesp-card">
+            <div class="wesp-letter">S</div>
+            <h3 data-t="sw.s.title"></h3>
+            <p data-t="sw.s.desc"></p>
+            <code data-t="sw.s.maps"></code>
+          </div>
+          <div class="wesp-card">
+            <div class="wesp-letter">P</div>
+            <h3 data-t="sw.p.title"></h3>
+            <p data-t="sw.p.desc"></p>
+            <code data-t="sw.p.maps"></code>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wesp-sources" data-t="sw.sources"></div>
+  </section>
+
   <!-- SECTION 03 -->
   <section class="section" id="start">
     <div class="section-header" style="padding-bottom: 0;">
@@ -528,6 +612,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       Struttura
     </a>
+        <a href="#wesp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      WESP
+    </a>
     <a href="#start">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       Inizia
@@ -560,6 +648,14 @@ const T = {
       "s1.f3.title": "Frontmatter = schema", "s1.f3.desc": "YAML in testa a ogni file. Tipo, data, tag, progetto. Struttura senza rigidit\u00e0.",
       "s1.f4.title": "L'AI \u00e8 sostituibile", "s1.f4.desc": "Il brain sopravvive al cambio di LLM, di piattaforma, di tutto. Le skill che installi restano tue.",
       "s2.label": "02 \u2014 Architettura", "s2.title": "La struttura delle directory",
+      "sw.label": "\u2014 Il modello", "sw.title": "Perch\u00e9 funziona: il modello WESP",
+      "sw.p1": "La struttura del brain non \u00e8 casuale. Replica i <strong>4 sistemi di memoria</strong> che le neuroscienze cognitive studiano da 50 anni. Ogni cartella corrisponde a come il cervello umano organizza davvero l'informazione.",
+      "sw.p2": "Il modello si chiama <strong>WESP</strong> \u2014 Working, Episodic, Semantic, Procedural. Non \u00e8 una metafora: \u00e8 un'implementazione funzionale degli stessi principi scoperti da Tulving, Baddeley e Damasio.",
+      "sw.w.title": "Working Memory", "sw.w.desc": "Quello che stai manipolando adesso. Capacit\u00e0 limitata, alta intensit\u00e0.", "sw.w.maps": "\u2192 context window",
+      "sw.e.title": "Episodic Memory", "sw.e.desc": "Esperienze personali. Cosa \u00e8 successo, quando, con chi.", "sw.e.maps": "\u2192 diary/",
+      "sw.s.title": "Semantic Memory", "sw.s.desc": "Fatti e conoscenza consolidata, scollegati dal tempo.", "sw.s.maps": "\u2192 wiki/",
+      "sw.p.title": "Procedural Memory", "sw.p.desc": "Come si fanno le cose. Skill implicite, pattern appresi.", "sw.p.maps": "\u2192 skills/, commands/",
+      "sw.sources": "Tulving (1972) \u00b7 Baddeley & Hitch (1974) \u00b7 Damasio (1994) \u00b7 wesp.li",
       "s3.label": "03 \u2014 Getting started", "s3.title": "Tre passi per iniziare",
       "s3.s1.title": "Clona il template", "s3.s1.desc": "Un <code>git clone</code> e sei operativo. Apri la cartella con il tuo AI agent preferito \u2014 Claude Code, Cursor, Aider, qualsiasi cosa legga file.",
       "s3.s2.title": "Rispondi alle domande", "s3.s2.desc": "L'onboarding interattivo ti chiede chi sei, cosa fai, come vuoi che l'agente si comporti. Genera automaticamente i file in <code>boot/</code>.",
@@ -595,6 +691,14 @@ const T = {
       "s1.f3.title": "Organizzato", "s1.f3.desc": "Un'intestazione in cima a ogni file dice che tipo di appunto \u00e8. L'AI capisce subito cosa sta leggendo.",
       "s1.f4.title": "Cambia AI quando vuoi", "s1.f4.desc": "Funziona con Claude, ChatGPT, Gemini e tutti gli altri. I comandi che aggiungi restano tuoi.",
       "s2.label": "02 \u2014 Cosa c'\u00e8 dentro", "s2.title": "Le cartelle del tuo brain",
+      "sw.label": "\u2014 Come funziona", "sw.title": "Funziona come il tuo cervello",
+      "sw.p1": "Il brain \u00e8 organizzato come la <strong>memoria umana</strong>. Non \u00e8 un caso: segue quello che i neuroscienziati hanno scoperto in 50 anni di ricerca su come il cervello conserva le informazioni.",
+      "sw.p2": "Quattro tipi di memoria, quattro cartelle. L'AI sa gi\u00e0 dove cercare perch\u00e9 \u00e8 la stessa logica che usa il tuo cervello.",
+      "sw.w.title": "Memoria di lavoro", "sw.w.desc": "Quello su cui ti stai concentrando adesso. Come la scrivania.", "sw.w.maps": "\u2192 la conversazione",
+      "sw.e.title": "Memoria episodica", "sw.e.desc": "I tuoi ricordi: cosa hai fatto, quando, perch\u00e9.", "sw.e.maps": "\u2192 il diario",
+      "sw.s.title": "Memoria semantica", "sw.s.desc": "Quello che sai: fatti, contatti, informazioni.", "sw.s.maps": "\u2192 la rubrica",
+      "sw.p.title": "Memoria procedurale", "sw.p.desc": "Le cose che sai fare, senza pensarci.", "sw.p.maps": "\u2192 i comandi",
+      "sw.sources": "Basato su 50 anni di ricerca neuroscientifica \u00b7 wesp.li",
       "s3.label": "03 \u2014 Come si inizia", "s3.title": "Tre passi e sei operativo",
       "s3.s1.title": "Scarica il template", "s3.s1.desc": "Copi una cartella gi\u00e0 pronta sul tuo computer. Ci vogliono 30 secondi.",
       "s3.s2.title": "Presentati all'AI", "s3.s2.desc": "L'AI ti fa qualche domanda: come ti chiami, che lavoro fai, come vuoi che ti parli. Poi si configura da solo.",
@@ -632,6 +736,14 @@ const T = {
       "s1.f3.title": "Frontmatter = schema", "s1.f3.desc": "YAML at the top of every file. Type, date, tags, project. Structure without rigidity.",
       "s1.f4.title": "The AI is replaceable", "s1.f4.desc": "The brain survives LLM changes, platform changes, everything. Skills you install stay yours.",
       "s2.label": "02 \u2014 Architecture", "s2.title": "Directory structure",
+      "sw.label": "\u2014 The model", "sw.title": "Why it works: the WESP model",
+      "sw.p1": "The brain's structure isn't arbitrary. It replicates the <strong>4 memory systems</strong> that cognitive neuroscience has studied for 50 years. Each directory maps to how the human brain actually organizes information.",
+      "sw.p2": "The model is called <strong>WESP</strong> \u2014 Working, Episodic, Semantic, Procedural. It's not a metaphor: it's a functional implementation of the same principles discovered by Tulving, Baddeley, and Damasio.",
+      "sw.w.title": "Working Memory", "sw.w.desc": "What you're manipulating right now. Limited capacity, high intensity.", "sw.w.maps": "\u2192 context window",
+      "sw.e.title": "Episodic Memory", "sw.e.desc": "Personal experiences. What happened, when, with whom.", "sw.e.maps": "\u2192 diary/",
+      "sw.s.title": "Semantic Memory", "sw.s.desc": "Consolidated facts and knowledge, detached from time.", "sw.s.maps": "\u2192 wiki/",
+      "sw.p.title": "Procedural Memory", "sw.p.desc": "How things are done. Implicit skills, learned patterns.", "sw.p.maps": "\u2192 skills/, commands/",
+      "sw.sources": "Tulving (1972) \u00b7 Baddeley & Hitch (1974) \u00b7 Damasio (1994) \u00b7 wesp.li",
       "s3.label": "03 \u2014 Getting started", "s3.title": "Three steps to start",
       "s3.s1.title": "Clone the template", "s3.s1.desc": "A <code>git clone</code> and you're ready. Open the folder with your favorite AI agent \u2014 Claude Code, Cursor, Aider, anything that reads files.",
       "s3.s2.title": "Answer the questions", "s3.s2.desc": "The interactive onboarding asks who you are, what you do, how you want the agent to behave. It auto-generates the files in <code>boot/</code>.",
@@ -668,6 +780,14 @@ const T = {
       "s1.f3.title": "Organized", "s1.f3.desc": "A header at the top of each file tells the AI what it's reading. It understands instantly.",
       "s1.f4.title": "Switch AI anytime", "s1.f4.desc": "Works with Claude, ChatGPT, Gemini and all the others. Commands you add stay yours.",
       "s2.label": "02 \u2014 What's inside", "s2.title": "Your brain's folders",
+      "sw.label": "\u2014 How it works", "sw.title": "It works like your brain",
+      "sw.p1": "The brain is organized like <strong>human memory</strong>. That's not a coincidence: it follows what neuroscientists have discovered in 50 years of research on how the brain stores information.",
+      "sw.p2": "Four types of memory, four folders. The AI already knows where to look because it's the same logic your brain uses.",
+      "sw.w.title": "Working memory", "sw.w.desc": "What you're focused on right now. Like your desk.", "sw.w.maps": "\u2192 the conversation",
+      "sw.e.title": "Episodic memory", "sw.e.desc": "Your memories: what you did, when, why.", "sw.e.maps": "\u2192 the journal",
+      "sw.s.title": "Semantic memory", "sw.s.desc": "What you know: facts, contacts, information.", "sw.s.maps": "\u2192 the address book",
+      "sw.p.title": "Procedural memory", "sw.p.desc": "Things you know how to do, without thinking.", "sw.p.maps": "\u2192 the commands",
+      "sw.sources": "Based on 50 years of neuroscience research \u00b7 wesp.li",
       "s3.label": "03 \u2014 How to start", "s3.title": "Three steps and you're set",
       "s3.s1.title": "Download the template", "s3.s1.desc": "Copy a ready-made folder to your computer. Takes 30 seconds.",
       "s3.s2.title": "Introduce yourself", "s3.s2.desc": "The AI asks a few questions: your name, your job, how you want it to talk to you. Then it sets itself up.",
