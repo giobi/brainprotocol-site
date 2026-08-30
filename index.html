@@ -592,7 +592,7 @@
     <div>Brain Protocol &copy; 2026</div>
     <div class="footer-center">
       <a href="https://github.com/giobi/brainprotocol">GitHub</a> &middot;
-      <a href="https://github.com/giobi/brainprotocol/blob/main/boot/brain.md">Spec</a> &middot;
+      <a href="/brain.md">Spec</a> &middot;
       <a href="https://github.com/giobi/brainprotocol">Template</a>
     </div>
     <div class="footer-right">
@@ -636,7 +636,7 @@ const T = {
   it: {
     tech: {
       "toggle.tech": "Pro", "toggle.easy": "Easy",
-      "hero.badge": "Specifica aperta \u00b7 v5.1",
+      "hero.badge": "Specifica aperta \u00b7 v6",
       "hero.title": "Dai al tuo agente AI un cervello strutturato",
       "hero.subtitle": "Una specifica markdown-first per organizzare la conoscenza del tuo AI agent. Leggibile da umani, versionata con git, compatibile con qualsiasi LLM.",
       "hero.cta1": "Leggi la spec", "hero.cta2": "Usa il template",
@@ -654,7 +654,7 @@ const T = {
       "sw.w.title": "Working Memory", "sw.w.desc": "Quello che stai manipolando adesso. Capacit\u00e0 limitata, alta intensit\u00e0.", "sw.w.maps": "\u2192 context window",
       "sw.e.title": "Episodic Memory", "sw.e.desc": "Esperienze personali. Cosa \u00e8 successo, quando, con chi.", "sw.e.maps": "\u2192 diary/",
       "sw.s.title": "Semantic Memory", "sw.s.desc": "Fatti e conoscenza consolidata, scollegati dal tempo.", "sw.s.maps": "\u2192 wiki/",
-      "sw.p.title": "Procedural Memory", "sw.p.desc": "Come si fanno le cose. Skill implicite, pattern appresi.", "sw.p.maps": "\u2192 skills/, commands/",
+      "sw.p.title": "Procedural Memory", "sw.p.desc": "Come si fanno le cose. Skill implicite, pattern appresi.", "sw.p.maps": "\u2192 skills/",
       "sw.sources": "Tulving (1972) \u00b7 Baddeley & Hitch (1974) \u00b7 Damasio (1994) \u00b7 wesp.li",
       "s3.label": "03 \u2014 Getting started", "s3.title": "Tre passi per iniziare",
       "s3.s1.title": "Clona il template", "s3.s1.desc": "Un <code>git clone</code> e sei operativo. Apri la cartella con il tuo AI agent preferito \u2014 Claude Code, Cursor, Aider, qualsiasi cosa legga file.",
@@ -666,20 +666,19 @@ const T = {
       "s5.u1.type": "Piattaforma SaaS", "s5.u1.desc": "Brain as a Service. Hosting, WebSSH, skill marketplace, onboarding automatico. Il modo pi\u00f9 veloce per avere il tuo brain operativo.",
             "s5.u3.name": "Il tuo progetto", "s5.u3.desc": "Clona il template, rispondi alle domande, inizia. Zero infrastruttura richiesta \u2014 basta git e un AI agent.",
       "dir": [
-        ["boot/", "Identit\u00e0 dell'agente, profilo utente, configurazione"],
-        ["wiki/", "Entit\u00e0 strutturate: persone, aziende, progetti"],
-        ["diary/", "Log temporale: cosa \u00e8 successo, quando, perch\u00e9"],
-        ["todo/", "Task aperti con frontmatter e tag"],
-        ["inbox/", "Punto di passaggio per roba in entrata"],
-        ["public/", "File pubblicati, serviti via web"],
-        ["storage/", "Temporanei, cache, file non strutturati"],
-        [".env", "Credenziali (sempre gitignored)"]
+        ["boot/", "Identità dell'agente, profilo utente, configurazione"],
+        ["wiki/", "Memoria semantica: entità, fatti, relazioni"],
+        ["diary/", "Memoria episodica: cosa è successo, e cosa va riguardato"],
+        ["skills/", "Memoria procedurale: cosa il brain sa fare"],
+        ["storage/", "Plug: disco locale, Dropbox, S3 — dipende dall\u0027installazione"],
+        ["artifact/", "Plug: dove vengono pubblicati i deliverable"],
+        [".env", "Credenziali del brain (sempre gitignored)"]
       ],
       "code": "<span class='comment'># Ogni file .md ha un frontmatter YAML</span>\n<span class='bracket'>---</span>\n<span class='key'>type</span>: <span class='string'>diary</span>\n<span class='key'>date</span>: <span class='string'>'2026-04-02'</span>\n<span class='key'>project</span>: <span class='string'>brainprotocol</span>\n<span class='key'>created_with</span>: <span class='string'>claude-sonnet</span>\n<span class='key'>tags</span>:\n  - <span class='string'>meeting</span>\n  - <span class='string'>decisioni</span>\n<span class='bracket'>---</span>\n\n<span class='comment'># Wiki-links: [[wiki/people/mario-rossi]]</span>"
     },
     easy: {
       "toggle.tech": "Pro", "toggle.easy": "Easy",
-      "hero.badge": "Specifica aperta \u00b7 v5.1",
+      "hero.badge": "Specifica aperta \u00b7 v6",
       "hero.title": "Il tuo assistente AI che non dimentica",
       "hero.subtitle": "Una cartella di file organizzati che permette al tuo assistente AI di ricordarsi chi sei, cosa fai e su cosa stai lavorando. Funziona con qualsiasi AI.",
       "hero.cta1": "Scopri come funziona", "hero.cta2": "Prova gratis",
@@ -710,12 +709,11 @@ const T = {
             "s5.u3.name": "Per te", "s5.u3.desc": "Scarica la cartella, rispondi a qualche domanda, e il tuo assistente AI inizia a ricordarsi di te.",
       "dir": [
         ["boot/", "Chi sei e come vuoi che l'AI si comporti"],
-        ["wiki/", "La tua rubrica: persone, aziende, progetti"],
-        ["diary/", "Il tuo diario: cosa hai fatto e quando"],
-        ["todo/", "La tua lista delle cose da fare"],
-        ["inbox/", "Roba nuova da smistare"],
-        ["public/", "Cose che vuoi condividere con altri"],
-        ["storage/", "File temporanei e vari"],
+        ["wiki/", "La tua rubrica: persone, luoghi, progetti"],
+        ["diary/", "Il tuo diario: cosa hai fatto, e cosa ti aspetta"],
+        ["skills/", "Le cose che il tuo assistente sa fare"],
+        ["storage/", "I tuoi file, dove preferisci tenerli"],
+        ["artifact/", "Le cose finite, pronte da mandare a qualcuno"],
         [".env", "Le tue password (protette)"]
       ],
       "code": "<span class='comment'># Ogni file ha un'intestazione che dice all'AI</span>\n<span class='comment'># cosa sta leggendo</span>\n<span class='bracket'>---</span>\n<span class='key'>tipo</span>: <span class='string'>diario</span>\n<span class='key'>data</span>: <span class='string'>'2 aprile 2026'</span>\n<span class='key'>progetto</span>: <span class='string'>il mio sito web</span>\n<span class='key'>parole chiave</span>:\n  - <span class='string'>riunione</span>\n  - <span class='string'>decisioni</span>\n<span class='bracket'>---</span>\n\n<span class='comment'># Poi scrivi quello che vuoi, in italiano</span>"
@@ -724,7 +722,7 @@ const T = {
   en: {
     tech: {
       "toggle.tech": "Pro", "toggle.easy": "Easy",
-      "hero.badge": "Open specification \u00b7 v5.1",
+      "hero.badge": "Open specification \u00b7 v6",
       "hero.title": "Give your AI agent a structured brain",
       "hero.subtitle": "A markdown-first specification for organizing your AI agent's knowledge. Human-readable, git-versioned, compatible with any LLM.",
       "hero.cta1": "Read the spec", "hero.cta2": "Use the template",
@@ -742,7 +740,7 @@ const T = {
       "sw.w.title": "Working Memory", "sw.w.desc": "What you're manipulating right now. Limited capacity, high intensity.", "sw.w.maps": "\u2192 context window",
       "sw.e.title": "Episodic Memory", "sw.e.desc": "Personal experiences. What happened, when, with whom.", "sw.e.maps": "\u2192 diary/",
       "sw.s.title": "Semantic Memory", "sw.s.desc": "Consolidated facts and knowledge, detached from time.", "sw.s.maps": "\u2192 wiki/",
-      "sw.p.title": "Procedural Memory", "sw.p.desc": "How things are done. Implicit skills, learned patterns.", "sw.p.maps": "\u2192 skills/, commands/",
+      "sw.p.title": "Procedural Memory", "sw.p.desc": "How things are done. Implicit skills, learned patterns.", "sw.p.maps": "\u2192 skills/",
       "sw.sources": "Tulving (1972) \u00b7 Baddeley & Hitch (1974) \u00b7 Damasio (1994) \u00b7 wesp.li",
       "s3.label": "03 \u2014 Getting started", "s3.title": "Three steps to start",
       "s3.s1.title": "Clone the template", "s3.s1.desc": "A <code>git clone</code> and you're ready. Open the folder with your favorite AI agent \u2014 Claude Code, Cursor, Aider, anything that reads files.",
@@ -756,19 +754,18 @@ const T = {
       "s5.u3.name": "Your project", "s5.u3.desc": "Clone the template, answer the questions, start. Zero infrastructure required \u2014 just git and an AI agent.",
       "dir": [
         ["boot/", "Agent identity, user profile, configuration"],
-        ["wiki/", "Structured entities: people, companies, projects"],
-        ["diary/", "Temporal log: what happened, when, why"],
-        ["todo/", "Open tasks with frontmatter and tags"],
-        ["inbox/", "Staging area for incoming stuff"],
-        ["public/", "Published files, served via web"],
-        ["storage/", "Temporary files, cache, unstructured data"],
-        [".env", "Credentials (always gitignored)"]
+        ["wiki/", "Semantic memory: entities, facts, relations"],
+        ["diary/", "Episodic memory: what happened, and what to look at next"],
+        ["skills/", "Procedural memory: what the brain knows how to do"],
+        ["storage/", "A plug: local disk, Dropbox, S3 — the driver depends on the install"],
+        ["artifact/", "A plug: where deliverables are published"],
+        [".env", "The brain's credentials (always gitignored)"]
       ],
       "code": "<span class='comment'># Every .md file has YAML frontmatter</span>\n<span class='bracket'>---</span>\n<span class='key'>type</span>: <span class='string'>diary</span>\n<span class='key'>date</span>: <span class='string'>'2026-04-02'</span>\n<span class='key'>project</span>: <span class='string'>brainprotocol</span>\n<span class='key'>created_with</span>: <span class='string'>claude-sonnet</span>\n<span class='key'>tags</span>:\n  - <span class='string'>meeting</span>\n  - <span class='string'>decisions</span>\n<span class='bracket'>---</span>\n\n<span class='comment'># Wiki-links: [[wiki/people/john-doe]]</span>"
     },
     easy: {
       "toggle.tech": "Pro", "toggle.easy": "Easy",
-      "hero.badge": "Open specification \u00b7 v5.1",
+      "hero.badge": "Open specification \u00b7 v6",
       "hero.title": "Your AI assistant that never forgets",
       "hero.subtitle": "An organized folder of files that lets your AI assistant remember who you are, what you do, and what you're working on. Works with any AI.",
       "hero.cta1": "See how it works", "hero.cta2": "Try it free",
@@ -799,12 +796,11 @@ const T = {
             "s5.u3.name": "For you", "s5.u3.desc": "Download the folder, answer a few questions, and your AI assistant starts remembering you.",
       "dir": [
         ["boot/", "Who you are and how you want the AI to behave"],
-        ["wiki/", "Your address book: people, companies, projects"],
-        ["diary/", "Your journal: what you did and when"],
-        ["todo/", "Your to-do list"],
-        ["inbox/", "New stuff to sort through"],
-        ["public/", "Things you want to share with others"],
-        ["storage/", "Temporary and miscellaneous files"],
+        ["wiki/", "Your address book: people, places, projects"],
+        ["diary/", "Your diary: what you did, and what is coming"],
+        ["skills/", "The things your assistant knows how to do"],
+        ["storage/", "Your files, wherever you prefer to keep them"],
+        ["artifact/", "Finished things, ready to send to someone"],
         [".env", "Your passwords (protected)"]
       ],
       "code": "<span class='comment'># Every file has a header that tells the AI</span>\n<span class='comment'># what it's reading</span>\n<span class='bracket'>---</span>\n<span class='key'>type</span>: <span class='string'>journal</span>\n<span class='key'>date</span>: <span class='string'>'April 2, 2026'</span>\n<span class='key'>project</span>: <span class='string'>my website</span>\n<span class='key'>keywords</span>:\n  - <span class='string'>meeting</span>\n  - <span class='string'>decisions</span>\n<span class='bracket'>---</span>\n\n<span class='comment'># Then write whatever you want</span>"
@@ -890,9 +886,11 @@ function toggleLang() { setLang(currentLang === 'it' ? 'en' : 'it'); }
 
 render();
 
-// Auto-fetch version from boot/brain.md on GitHub
+// La versione si legge da /brain.md, cioe' dal file che questo sito pubblica.
+// Prima puntava a raw.githubusercontent: una seconda copia, su un dominio di terzi,
+// che poteva raccontare una versione diversa da quella servita qui.
 (function fetchVersion() {
-  fetch('https://raw.githubusercontent.com/giobi/brainprotocol/main/boot/brain.md')
+  fetch('/brain.md')
     .then(r => r.ok ? r.text() : null)
     .then(text => {
       if (!text) return;
