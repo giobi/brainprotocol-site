@@ -67,6 +67,7 @@
     .hero p + p { margin-top: 14px; }
 
     .install { border-bottom: 1px solid var(--positive); padding: 32px 48px; }
+    .install-note { font-size: 14px; color: var(--positive-muted); margin-top: 16px; max-width: 70ch; }
     .install h2 { font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--positive-muted); margin-bottom: 16px; }
     pre {
       font-family: var(--font-mono); font-size: 13px; line-height: 1.8;
@@ -110,7 +111,20 @@
       color: var(--positive-muted); border: 1px solid var(--negative-muted);
       padding: 2px 7px; border-radius: 111px;
     }
-    .skill-foot code { font-size: 12px; color: var(--positive-bold); border-top: 1px dashed var(--negative-muted); padding-top: 10px; }
+    .actions {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      border-top: 1px dashed var(--negative-muted); padding-top: 10px;
+    }
+    .actions code { font-size: 12px; color: var(--positive-bold); }
+    .copy {
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.02em;
+      padding: 5px 12px; cursor: pointer; white-space: nowrap;
+      border: 1px solid var(--positive); border-radius: 111px;
+      background: transparent; color: var(--positive);
+      transition: background 0.15s, color 0.15s;
+    }
+    .copy:hover { background: var(--positive); color: var(--negative); }
+    .copy.done { background: var(--accent); border-color: var(--accent); color: #fff; }
 
     .filter-bar {
       display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
@@ -189,8 +203,11 @@
 /brain install design
 
 <span class="c"># or by hand — one folder, no build step</span>
-curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/design/SKILL.md \
-  -o .claude/skills/design/SKILL.md</pre>
+curl -sL https://brainprotocol.it/skills/design/design.zip -o /tmp/design.zip
+unzip -o /tmp/design.zip -d .claude/skills/</pre>
+    <p class="install-note">Using something other than Claude Code? Hit <strong>copy prompt</strong> on any
+    skill below and paste it into your agent. It points at a page that tells the agent how to fetch
+    the skill and what to do with it — including what changes when there is no brain around it.</p>
   </section>
 
   <div class="filter-bar">
@@ -213,7 +230,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Builds shared understanding before anyone writes anything. It grills you one question at a time until the concept holds in three sentences, captures the vocabulary as it surfaces — the words you and the agent are using differently without noticing — and settles the system into a few deep modules with narrow interfaces. The output is a design.md a future session can read cold.</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">design</span><span class="tag">deep-modules</span><span class="tag">vocabulary</span><span class="tag">grill</span></div>
-          <code>/plugin install design</code>
+          <div class="actions">
+            <code>/plugin install design</code>
+            <button class="copy" type="button" data-prompt="Install the design skill: read https://brainprotocol.it/skills/design/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card featured" data-name="build" data-search="build build mode — tdd + deep modules + a return loop that keeps the design alive build tdd deep-modules grey-box testing">
@@ -224,7 +244,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Implements those modules under two constraints at once: TDD for the rhythm (one test, one implementation, no code without a test that demands it) and deep modules for the structure — you design the interface, the agent may write the implementation. After each area it asks whether the module can be delegated now, then loops back to update design.md so the map stays alive.</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">build</span><span class="tag">tdd</span><span class="tag">deep-modules</span><span class="tag">grey-box</span></div>
-          <code>/plugin install build</code>
+          <div class="actions">
+            <code>/plugin install build</code>
+            <button class="copy" type="button" data-prompt="Install the build skill: read https://brainprotocol.it/skills/build/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
     </div>
@@ -244,7 +267,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Build mode — TDD + deep modules + a return loop that keeps the design alive</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">build</span><span class="tag">tdd</span><span class="tag">deep-modules</span><span class="tag">grey-box</span></div>
-          <code>/plugin install build</code>
+          <div class="actions">
+            <code>/plugin install build</code>
+            <button class="copy" type="button" data-prompt="Install the build skill: read https://brainprotocol.it/skills/build/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="design" data-search="design collaborative design — builds shared understanding of any project before acting design deep-modules vocabulary grill planning">
@@ -255,7 +281,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Collaborative design — builds shared understanding of any project before acting</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">design</span><span class="tag">deep-modules</span><span class="tag">vocabulary</span><span class="tag">grill</span></div>
-          <code>/plugin install design</code>
+          <div class="actions">
+            <code>/plugin install design</code>
+            <button class="copy" type="button" data-prompt="Install the design skill: read https://brainprotocol.it/skills/design/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="save" data-search="save mid-session checkpoint (log, database, commit, push) without closing checkpoint git session workflow">
@@ -266,7 +295,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Mid-session checkpoint (log, database, commit, push) without closing</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">checkpoint</span><span class="tag">git</span><span class="tag">session</span><span class="tag">workflow</span></div>
-          <code>/plugin install save</code>
+          <div class="actions">
+            <code>/plugin install save</code>
+            <button class="copy" type="button" data-prompt="Install the save skill: read https://brainprotocol.it/skills/save/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -285,7 +317,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Zero-filter brainstorming on projects, ideas, and decisions</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">brainstorm</span><span class="tag">ideas</span><span class="tag">creative</span></div>
-          <code>/plugin install brainstorm</code>
+          <div class="actions">
+            <code>/plugin install brainstorm</code>
+            <button class="copy" type="button" data-prompt="Install the brainstorm skill: read https://brainprotocol.it/skills/brainstorm/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="devil" data-search="devil devil&#x27;s advocate — ruthlessly challenges any idea, plan, or decision devil advocate critical-thinking">
@@ -296,7 +331,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Devil&#x27;s advocate — ruthlessly challenges any idea, plan, or decision</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">devil</span><span class="tag">advocate</span><span class="tag">critical-thinking</span></div>
-          <code>/plugin install devil</code>
+          <div class="actions">
+            <code>/plugin install devil</code>
+            <button class="copy" type="button" data-prompt="Install the devil skill: read https://brainprotocol.it/skills/devil/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -315,7 +353,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Inbox manager — classify and route files from inbox/ to diary, wiki, or log</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">inbox</span><span class="tag">triage</span><span class="tag">brain</span><span class="tag">routing</span></div>
-          <code>/plugin install inbox</code>
+          <div class="actions">
+            <code>/plugin install inbox</code>
+            <button class="copy" type="button" data-prompt="Install the inbox skill: read https://brainprotocol.it/skills/inbox/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="project" data-search="project project-first session management — activate, create, search brain projects project session brain rag core">
@@ -326,7 +367,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Project-first session management — activate, create, search brain projects</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">project</span><span class="tag">session</span><span class="tag">brain</span><span class="tag">rag</span></div>
-          <code>/plugin install project</code>
+          <div class="actions">
+            <code>/plugin install project</code>
+            <button class="copy" type="button" data-prompt="Install the project skill: read https://brainprotocol.it/skills/project/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -345,7 +389,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>LinkedIn intelligence — query builder, result parser, Proxycurl integration</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">linkedin</span><span class="tag">osint</span><span class="tag">search</span></div>
-          <code>/plugin install linkedin</code>
+          <div class="actions">
+            <code>/plugin install linkedin</code>
+            <button class="copy" type="button" data-prompt="Install the linkedin skill: read https://brainprotocol.it/skills/linkedin/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="stalker" data-search="stalker deep osint research on any subject — people, companies, domains, concepts osint research stalker intelligence">
@@ -356,7 +403,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Deep OSINT research on any subject — people, companies, domains, concepts</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">osint</span><span class="tag">research</span><span class="tag">stalker</span><span class="tag">intelligence</span></div>
-          <code>/plugin install stalker</code>
+          <div class="actions">
+            <code>/plugin install stalker</code>
+            <button class="copy" type="button" data-prompt="Install the stalker skill: read https://brainprotocol.it/skills/stalker/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -375,7 +425,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Figma Parser — extract design system from Figma files via API</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">figma</span><span class="tag">design-system</span><span class="tag">design</span></div>
-          <code>/plugin install figma</code>
+          <div class="actions">
+            <code>/plugin install figma</code>
+            <button class="copy" type="button" data-prompt="Install the figma skill: read https://brainprotocol.it/skills/figma/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="site-ripper" data-search="site-ripper site ripper — extract design system from any website via playwright design playwright scraping css">
@@ -386,7 +439,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Site Ripper — extract design system from any website via Playwright</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">design</span><span class="tag">playwright</span><span class="tag">scraping</span><span class="tag">css</span></div>
-          <code>/plugin install site-ripper</code>
+          <div class="actions">
+            <code>/plugin install site-ripper</code>
+            <button class="copy" type="button" data-prompt="Install the site-ripper skill: read https://brainprotocol.it/skills/site-ripper/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -405,7 +461,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>PlayRalph — Playwright diagnostic loop for sites and apps</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">playwright</span><span class="tag">testing</span><span class="tag">diagnostic</span><span class="tag">qa</span></div>
-          <code>/plugin install playralph</code>
+          <div class="actions">
+            <code>/plugin install playralph</code>
+            <button class="copy" type="button" data-prompt="Install the playralph skill: read https://brainprotocol.it/skills/playralph/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="playw" data-search="playw playwright sidecar — visual verification after every code change playwright visual verification tdd">
@@ -416,7 +475,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Playwright sidecar — visual verification after every code change</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">playwright</span><span class="tag">visual</span><span class="tag">verification</span><span class="tag">tdd</span></div>
-          <code>/plugin install playw</code>
+          <div class="actions">
+            <code>/plugin install playw</code>
+            <button class="copy" type="button" data-prompt="Install the playw skill: read https://brainprotocol.it/skills/playw/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="radar" data-search="radar radar — site audit with eli5 report + technical details audit testing report qa">
@@ -427,7 +489,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Radar — site audit with ELI5 report + technical details</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">audit</span><span class="tag">testing</span><span class="tag">report</span><span class="tag">qa</span></div>
-          <code>/plugin install radar</code>
+          <div class="actions">
+            <code>/plugin install radar</code>
+            <button class="copy" type="button" data-prompt="Install the radar skill: read https://brainprotocol.it/skills/radar/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -446,7 +511,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>S.C.A.R. — Signal, Cause, Action, Reinforcement. Structured incident documentation.</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">incident</span><span class="tag">postmortem</span><span class="tag">scar</span><span class="tag">documentation</span></div>
-          <code>/plugin install scar</code>
+          <div class="actions">
+            <code>/plugin install scar</code>
+            <button class="copy" type="button" data-prompt="Install the scar skill: read https://brainprotocol.it/skills/scar/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="snapshot" data-search="snapshot docker snapshot — time machine for php apps docker snapshot backup devops">
@@ -457,7 +525,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Docker Snapshot — Time Machine for PHP apps</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">docker</span><span class="tag">snapshot</span><span class="tag">backup</span><span class="tag">devops</span></div>
-          <code>/plugin install snapshot</code>
+          <div class="actions">
+            <code>/plugin install snapshot</code>
+            <button class="copy" type="button" data-prompt="Install the snapshot skill: read https://brainprotocol.it/skills/snapshot/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="tmux" data-search="tmux tmux management — pane/window titles, layout, move panes tmux terminal layout">
@@ -468,7 +539,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Tmux management — pane/window titles, layout, move panes</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">tmux</span><span class="tag">terminal</span><span class="tag">layout</span></div>
-          <code>/plugin install tmux</code>
+          <div class="actions">
+            <code>/plugin install tmux</code>
+            <button class="copy" type="button" data-prompt="Install the tmux skill: read https://brainprotocol.it/skills/tmux/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -487,7 +561,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">artifact</span><span class="tag">static-site</span><span class="tag">reports</span><span class="tag">share-link</span></div>
-          <code>/plugin install artifact</code>
+          <div class="actions">
+            <code>/plugin install artifact</code>
+            <button class="copy" type="button" data-prompt="Install the artifact skill: read https://brainprotocol.it/skills/artifact/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="pressless" data-search="pressless pressless — ai static site generator. wordpress without the weight. static-site generator html css">
@@ -498,7 +575,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>PressLess — AI static site generator. WordPress without the weight.</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">static-site</span><span class="tag">generator</span><span class="tag">html</span><span class="tag">css</span></div>
-          <code>/plugin install pressless</code>
+          <div class="actions">
+            <code>/plugin install pressless</code>
+            <button class="copy" type="button" data-prompt="Install the pressless skill: read https://brainprotocol.it/skills/pressless/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="public" data-search="public deprecated — superseded by the `artifact` plugin, which is where development continues. kept installable for brains still pointing here. static-site public templates html">
@@ -509,7 +589,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>DEPRECATED — superseded by the `artifact` plugin, which is where development continues. Kept installable for brains still pointing here.</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">static-site</span><span class="tag">public</span><span class="tag">templates</span><span class="tag">html</span></div>
-          <code>/plugin install public</code>
+          <div class="actions">
+            <code>/plugin install public</code>
+            <button class="copy" type="button" data-prompt="Install the public skill: read https://brainprotocol.it/skills/public/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="sharepoint" data-search="sharepoint sharepoint access via microsoft graph — tenant-wide search, browse sites, read and upload files. reuses the email skill&#x27;s o365 token. sharepoint microsoft-graph o365 files search">
@@ -520,7 +603,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>SharePoint access via Microsoft Graph — tenant-wide search, browse sites, read and upload files. Reuses the email skill&#x27;s O365 token.</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">sharepoint</span><span class="tag">microsoft-graph</span><span class="tag">o365</span><span class="tag">files</span></div>
-          <code>/plugin install sharepoint</code>
+          <div class="actions">
+            <code>/plugin install sharepoint</code>
+            <button class="copy" type="button" data-prompt="Install the sharepoint skill: read https://brainprotocol.it/skills/sharepoint/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="wordpress" data-search="wordpress wordpress management — rest api, wp-cli, multi-site, puppeteer, gdpr wordpress cms rest-api wpcli multi-site gdpr">
@@ -531,7 +617,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>WordPress management — REST API, WP-CLI, multi-site, Puppeteer, GDPR</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">wordpress</span><span class="tag">cms</span><span class="tag">rest-api</span><span class="tag">wpcli</span></div>
-          <code>/plugin install wordpress</code>
+          <div class="actions">
+            <code>/plugin install wordpress</code>
+            <button class="copy" type="button" data-prompt="Install the wordpress skill: read https://brainprotocol.it/skills/wordpress/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -550,7 +639,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Blog management — draft, publish, images for Jekyll and WordPress</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">blog</span><span class="tag">jekyll</span><span class="tag">wordpress</span><span class="tag">writing</span></div>
-          <code>/plugin install blog</code>
+          <div class="actions">
+            <code>/plugin install blog</code>
+            <button class="copy" type="button" data-prompt="Install the blog skill: read https://brainprotocol.it/skills/blog/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="kindle" data-search="kindle kindle-style reader — manage long-form articles as a personal reading site reading articles kindle long-form">
@@ -561,7 +653,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Kindle-style reader — manage long-form articles as a personal reading site</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">reading</span><span class="tag">articles</span><span class="tag">kindle</span><span class="tag">long-form</span></div>
-          <code>/plugin install kindle</code>
+          <div class="actions">
+            <code>/plugin install kindle</code>
+            <button class="copy" type="button" data-prompt="Install the kindle skill: read https://brainprotocol.it/skills/kindle/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -580,7 +675,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Ghostwriter — write in the user&#x27;s voice, not as an LLM</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">writing</span><span class="tag">style</span><span class="tag">email</span><span class="tag">voice</span></div>
-          <code>/plugin install ghostwriter</code>
+          <div class="actions">
+            <code>/plugin install ghostwriter</code>
+            <button class="copy" type="button" data-prompt="Install the ghostwriter skill: read https://brainprotocol.it/skills/ghostwriter/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -599,7 +697,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Gmail orchestrator — triage inbox, search, draft replies in-thread</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">gmail</span><span class="tag">email</span><span class="tag">oauth</span><span class="tag">inbox</span></div>
-          <code>/plugin install gmail</code>
+          <div class="actions">
+            <code>/plugin install gmail</code>
+            <button class="copy" type="button" data-prompt="Install the gmail skill: read https://brainprotocol.it/skills/gmail/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -618,7 +719,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Discord bot — send messages to channels, DMs, and project channels</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">discord</span><span class="tag">bot</span><span class="tag">messaging</span><span class="tag">notifications</span></div>
-          <code>/plugin install discord</code>
+          <div class="actions">
+            <code>/plugin install discord</code>
+            <button class="copy" type="button" data-prompt="Install the discord skill: read https://brainprotocol.it/skills/discord/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="telegram" data-search="telegram telegram bot — send messages, read inbox, manage bot interactions telegram bot messaging notifications">
@@ -629,7 +733,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Telegram bot — send messages, read inbox, manage bot interactions</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">telegram</span><span class="tag">bot</span><span class="tag">messaging</span><span class="tag">notifications</span></div>
-          <code>/plugin install telegram</code>
+          <div class="actions">
+            <code>/plugin install telegram</code>
+            <button class="copy" type="button" data-prompt="Install the telegram skill: read https://brainprotocol.it/skills/telegram/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -648,7 +755,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Google Calendar — create, list, update, delete events</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">google</span><span class="tag">calendar</span><span class="tag">events</span><span class="tag">schedule</span></div>
-          <code>/plugin install calendar</code>
+          <div class="actions">
+            <code>/plugin install calendar</code>
+            <button class="copy" type="button" data-prompt="Install the calendar skill: read https://brainprotocol.it/skills/calendar/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="drive" data-search="drive google drive organizer — audit, triage inbox, split pdf, rename, move google drive files pdf">
@@ -659,7 +769,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Google Drive organizer — audit, triage inbox, split PDF, rename, move</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">google</span><span class="tag">drive</span><span class="tag">files</span><span class="tag">pdf</span></div>
-          <code>/plugin install drive</code>
+          <div class="actions">
+            <code>/plugin install drive</code>
+            <button class="copy" type="button" data-prompt="Install the drive skill: read https://brainprotocol.it/skills/drive/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -678,7 +791,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>AI email auto-responder — monitors Gmail, drafts context-aware replies, never sends without approval</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">email</span><span class="tag">gmail</span><span class="tag">autoresponder</span><span class="tag">ai</span></div>
-          <code>/plugin install autoresponder</code>
+          <div class="actions">
+            <code>/plugin install autoresponder</code>
+            <button class="copy" type="button" data-prompt="Install the autoresponder skill: read https://brainprotocol.it/skills/autoresponder/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="schedule" data-search="schedule schedule manager — list, add, edit, disable, enable brain scheduled tasks cron scheduler automation tasks">
@@ -689,7 +805,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Schedule manager — list, add, edit, disable, enable brain scheduled tasks</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">cron</span><span class="tag">scheduler</span><span class="tag">automation</span><span class="tag">tasks</span></div>
-          <code>/plugin install schedule</code>
+          <div class="actions">
+            <code>/plugin install schedule</code>
+            <button class="copy" type="button" data-prompt="Install the schedule skill: read https://brainprotocol.it/skills/schedule/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -708,7 +827,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>AI image generation — Gemini Imagen, fal.ai (image/video/audio/TTS), Replicate Flux</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">image</span><span class="tag">video</span><span class="tag">audio</span><span class="tag">tts</span></div>
-          <code>/plugin install imagen</code>
+          <div class="actions">
+            <code>/plugin install imagen</code>
+            <button class="copy" type="button" data-prompt="Install the imagen skill: read https://brainprotocol.it/skills/imagen/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -727,7 +849,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Cloudflare DNS — zones, records, cache purge, R2, Pages</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">cloudflare</span><span class="tag">dns</span><span class="tag">infrastructure</span><span class="tag">r2</span></div>
-          <code>/plugin install cloudflare</code>
+          <div class="actions">
+            <code>/plugin install cloudflare</code>
+            <button class="copy" type="button" data-prompt="Install the cloudflare skill: read https://brainprotocol.it/skills/cloudflare/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -746,7 +871,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Internet.bs — domain management: check, register, renew, DNS, nameservers</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">domains</span><span class="tag">dns</span><span class="tag">registrar</span><span class="tag">internetbs</span></div>
-          <code>/plugin install internetbs</code>
+          <div class="actions">
+            <code>/plugin install internetbs</code>
+            <button class="copy" type="button" data-prompt="Install the internetbs skill: read https://brainprotocol.it/skills/internetbs/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -765,7 +893,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Learn — genera cheatsheet interattive per imparare comandi e tool tecnici</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">cheatsheet</span><span class="tag">learning</span><span class="tag">interactive</span><span class="tag">tutorial</span></div>
-          <code>/plugin install learn</code>
+          <div class="actions">
+            <code>/plugin install learn</code>
+            <button class="copy" type="button" data-prompt="Install the learn skill: read https://brainprotocol.it/skills/learn/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -784,7 +915,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>GitHub — repos, issues, PRs, gists, Pages, branches via API</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">github</span><span class="tag">git</span><span class="tag">issues</span><span class="tag">pr</span></div>
-          <code>/plugin install github</code>
+          <div class="actions">
+            <code>/plugin install github</code>
+            <button class="copy" type="button" data-prompt="Install the github skill: read https://brainprotocol.it/skills/github/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -803,7 +937,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Brain package manager — install, update, list skills from registries</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">package-manager</span><span class="tag">install</span><span class="tag">brain</span><span class="tag">meta</span></div>
-          <code>/plugin install brain</code>
+          <div class="actions">
+            <code>/plugin install brain</code>
+            <button class="copy" type="button" data-prompt="Install the brain skill: read https://brainprotocol.it/skills/brain/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       <article class="skill-card" data-name="cmd" data-search="cmd slash command manager — list, create, edit, delete custom commands commands meta management">
@@ -814,7 +951,10 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
         <p>Slash command manager — list, create, edit, delete custom commands</p>
         <div class="skill-foot">
           <div class="tags"><span class="tag">commands</span><span class="tag">meta</span><span class="tag">management</span></div>
-          <code>/plugin install cmd</code>
+          <div class="actions">
+            <code>/plugin install cmd</code>
+            <button class="copy" type="button" data-prompt="Install the cmd skill: read https://brainprotocol.it/skills/cmd/install and follow the instructions there.">copy prompt</button>
+          </div>
         </div>
       </article>
       </div>
@@ -871,6 +1011,36 @@ curl -sL https://github.com/giobi/claude-skills/raw/main/plugins/design/skills/d
     }
 
     input.addEventListener('input', apply);
+
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest('.copy');
+      if (!button) return;
+      var text = button.dataset.prompt;
+      var done = function () {
+        var label = button.textContent;
+        button.textContent = 'copied';
+        button.classList.add('done');
+        setTimeout(function () {
+          button.textContent = label;
+          button.classList.remove('done');
+        }, 1600);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else {
+        fallback();
+      }
+      function fallback() {
+        var area = document.createElement('textarea');
+        area.value = text;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        try { document.execCommand('copy'); done(); } catch (e) { window.prompt('Copy this:', text); }
+        document.body.removeChild(area);
+      }
+    });
   })();
 </script>
 </body>

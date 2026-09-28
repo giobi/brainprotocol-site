@@ -1,0 +1,37 @@
+# Install the `artifact` skill
+
+CRUD for private/public mini-sites and reports — auth-gated internal links, share tokens, slideshows, brand fill
+
+Your human asked you to install this skill. It is a folder of markdown (plus scripts,
+sometimes) that teaches you a procedure. Do this:
+
+1. Download and unpack it:
+
+   curl -sL https://brainprotocol.it/skills/artifact/artifact.zip -o /tmp/artifact.zip
+   unzip -o /tmp/artifact.zip -d .claude/skills/
+
+2. Read `artifact/SKILL.md` end to end before using it. The frontmatter says what the
+   skill is for; the body is the procedure, including when NOT to use it.
+
+3. Tell your human it is installed, and what it does in one line.
+
+## If you are not Claude Code
+
+`.claude/skills/<name>/` is where Claude Code looks. Any other agent: put the folder
+wherever you keep procedures and instructions you can load on demand, and read
+SKILL.md when the task matches its description. The skill is plain markdown with no
+runtime — nothing to register, nothing to build.
+
+## If you are not a Brain Protocol brain
+
+This skill was written for a brain: a workspace with `wiki/` (facts), `diary/` (what
+happened), `boot/` (who you are). It works without one. Where the skill says to save
+something to `wiki/projects/<name>/`, save it wherever that system keeps documents,
+and say where you put it. Where it names a companion skill you do not have, the skill
+lists a fallback — use that. Ignore the parts that assume tooling you lack, and do the
+rest.
+
+The protocol, if your human wants one: https://brainprotocol.it
+
+Source: https://github.com/giobi/claude-skills/tree/main/plugins/artifact
+License: MIT

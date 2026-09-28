@@ -10,11 +10,15 @@ page keeps working when GitHub does not.
     python3 bin/build-skills.py /path/to/skills-repo  # read a local checkout
 """
 import html
+import io
 import json
 import os
 import pathlib
+import shutil
 import sys
+import tarfile
 import urllib.request
+import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "skills" / "index.html"
@@ -24,6 +28,8 @@ MANIFEST_PATH = ".claude-plugin/marketplace.json"
 REPO_SLUG = os.environ.get("SKILLS_REPO", "giobi/claude-skills")
 MANIFEST_URL = f"https://raw.githubusercontent.com/{REPO_SLUG}/main/{MANIFEST_PATH}"
 REPO_URL = f"https://github.com/{REPO_SLUG}"
+TARBALL_URL = f"https://codeload.github.com/{REPO_SLUG}/tar.gz/refs/heads/main"
+SITE = "https://brainprotocol.it"
 
 LABELS = {
     "workflow": "Thinking & Building",
@@ -68,6 +74,96 @@ FEATURED = {
 }
 
 
+def skill_sources(argv):
+    """Return {skill name: Path of its plugin folder}, from a local checkout or the tarball.
+
+    The zips are built here rather than linked on GitHub, because GitHub serves no
+    archive for a subfolder of a repo.
+    """
+    if len(argv) > 1:
+        root = pathlib.Path(argv[1]) / "plugins"
+        return {d.name: d for d in sorted(root.iterdir()) if d.is_dir()}
+
+    print(f"tarball: {TARBALL_URL}")
+    with urllib.request.urlopen(TARBALL_URL, timeout=60) as response:
+        blob = response.read()
+    tmp = pathlib.Path(".skills-src")
+    if tmp.exists():
+        shutil.rmtree(tmp)
+    with tarfile.open(fileobj=io.BytesIO(blob), mode="r:gz") as tar:
+        tar.extractall(tmp)
+    root = next(tmp.iterdir()) / "plugins"
+    return {d.name: d for d in sorted(root.iterdir()) if d.is_dir()}
+
+
+def write_zip(name, folder, out_dir):
+    """Zip a plugin folder so it unpacks straight into .claude/skills/<name>/."""
+    skill_dir = folder / "skills" / name
+    if not skill_dir.is_dir():
+        candidates = [d for d in (folder / "skills").iterdir() if d.is_dir()] \
+            if (folder / "skills").is_dir() else []
+        if not candidates:
+            return None
+        skill_dir = candidates[0]
+
+    target = out_dir / f"{name}.zip"
+    with zipfile.ZipFile(target, "w", zipfile.ZIP_DEFLATED) as archive:
+        for path in sorted(skill_dir.rglob("*")):
+            if path.is_dir() or "__pycache__" in path.parts:
+                continue
+            archive.write(path, f"{name}/{path.relative_to(skill_dir)}")
+    return target
+
+
+def install_prompt(plugin, has_zip):
+    """The plain-text page an agent is pointed at. Small on purpose."""
+    name = plugin["name"]
+    grab = (
+        f"curl -sL {SITE}/skills/{name}/{name}.zip -o /tmp/{name}.zip\n"
+        f"   unzip -o /tmp/{name}.zip -d .claude/skills/"
+        if has_zip else
+        f"curl -sL {REPO_URL}/raw/main/{plugin.get('source', '').lstrip('./')}"
+        f"/skills/{name}/SKILL.md -o .claude/skills/{name}/SKILL.md"
+    )
+    return f"""# Install the `{name}` skill
+
+{plugin['description']}
+
+Your human asked you to install this skill. It is a folder of markdown (plus scripts,
+sometimes) that teaches you a procedure. Do this:
+
+1. Download and unpack it:
+
+   {grab}
+
+2. Read `{name}/SKILL.md` end to end before using it. The frontmatter says what the
+   skill is for; the body is the procedure, including when NOT to use it.
+
+3. Tell your human it is installed, and what it does in one line.
+
+## If you are not Claude Code
+
+`.claude/skills/<name>/` is where Claude Code looks. Any other agent: put the folder
+wherever you keep procedures and instructions you can load on demand, and read
+SKILL.md when the task matches its description. The skill is plain markdown with no
+runtime — nothing to register, nothing to build.
+
+## If you are not a Brain Protocol brain
+
+This skill was written for a brain: a workspace with `wiki/` (facts), `diary/` (what
+happened), `boot/` (who you are). It works without one. Where the skill says to save
+something to `wiki/projects/<name>/`, save it wherever that system keeps documents,
+and say where you put it. Where it names a companion skill you do not have, the skill
+lists a fallback — use that. Ignore the parts that assume tooling you lack, and do the
+rest.
+
+The protocol, if your human wants one: {SITE}
+
+Source: {REPO_URL}/tree/main/{plugin.get('source', '').lstrip('./')}
+License: MIT
+"""
+
+
 def load_manifest(argv):
     if len(argv) > 1:
         path = pathlib.Path(argv[1]) / MANIFEST_PATH
@@ -85,6 +181,10 @@ def esc(text):
 def skill_card(plugin, featured=False):
     name = esc(plugin["name"])
     source = plugin.get("source", "").lstrip("./")
+    prompt = esc(
+        f"Install the {plugin['name']} skill: read {SITE}/skills/{plugin['name']}/install "
+        f"and follow the instructions there."
+    )
     tags = "".join(f'<span class="tag">{esc(t)}</span>' for t in plugin.get("tags", [])[:4])
     body = FEATURED[plugin["name"]] if featured else plugin["description"]
     cls = "skill-card featured" if featured else "skill-card"
@@ -96,7 +196,10 @@ def skill_card(plugin, featured=False):
         <p>{esc(body)}</p>
         <div class="skill-foot">
           <div class="tags">{tags}</div>
-          <code>/plugin install {name}</code>
+          <div class="actions">
+            <code>/plugin install {name}</code>
+            <button class="copy" type="button" data-prompt="{prompt}">copy prompt</button>
+          </div>
         </div>
       </article>"""
 
@@ -201,6 +304,7 @@ def render(manifest):
     .hero p + p {{ margin-top: 14px; }}
 
     .install {{ border-bottom: 1px solid var(--positive); padding: 32px 48px; }}
+    .install-note {{ font-size: 14px; color: var(--positive-muted); margin-top: 16px; max-width: 70ch; }}
     .install h2 {{ font-family: var(--font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--positive-muted); margin-bottom: 16px; }}
     pre {{
       font-family: var(--font-mono); font-size: 13px; line-height: 1.8;
@@ -244,7 +348,20 @@ def render(manifest):
       color: var(--positive-muted); border: 1px solid var(--negative-muted);
       padding: 2px 7px; border-radius: 111px;
     }}
-    .skill-foot code {{ font-size: 12px; color: var(--positive-bold); border-top: 1px dashed var(--negative-muted); padding-top: 10px; }}
+    .actions {{
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      border-top: 1px dashed var(--negative-muted); padding-top: 10px;
+    }}
+    .actions code {{ font-size: 12px; color: var(--positive-bold); }}
+    .copy {{
+      font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.02em;
+      padding: 5px 12px; cursor: pointer; white-space: nowrap;
+      border: 1px solid var(--positive); border-radius: 111px;
+      background: transparent; color: var(--positive);
+      transition: background 0.15s, color 0.15s;
+    }}
+    .copy:hover {{ background: var(--positive); color: var(--negative); }}
+    .copy.done {{ background: var(--accent); border-color: var(--accent); color: #fff; }}
 
     .filter-bar {{
       display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
@@ -323,8 +440,11 @@ def render(manifest):
 /brain install design
 
 <span class="c"># or by hand — one folder, no build step</span>
-curl -sL {REPO_URL}/raw/main/plugins/design/skills/design/SKILL.md \\
-  -o .claude/skills/design/SKILL.md</pre>
+curl -sL {SITE}/skills/design/design.zip -o /tmp/design.zip
+unzip -o /tmp/design.zip -d .claude/skills/</pre>
+    <p class="install-note">Using something other than Claude Code? Hit <strong>copy prompt</strong> on any
+    skill below and paste it into your agent. It points at a page that tells the agent how to fetch
+    the skill and what to do with it — including what changes when there is no brain around it.</p>
   </section>
 
   <div class="filter-bar">
@@ -396,6 +516,36 @@ curl -sL {REPO_URL}/raw/main/plugins/design/skills/design/SKILL.md \\
     }}
 
     input.addEventListener('input', apply);
+
+    document.addEventListener('click', function (event) {{
+      var button = event.target.closest('.copy');
+      if (!button) return;
+      var text = button.dataset.prompt;
+      var done = function () {{
+        var label = button.textContent;
+        button.textContent = 'copied';
+        button.classList.add('done');
+        setTimeout(function () {{
+          button.textContent = label;
+          button.classList.remove('done');
+        }}, 1600);
+      }};
+      if (navigator.clipboard && window.isSecureContext) {{
+        navigator.clipboard.writeText(text).then(done, fallback);
+      }} else {{
+        fallback();
+      }}
+      function fallback() {{
+        var area = document.createElement('textarea');
+        area.value = text;
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        try {{ document.execCommand('copy'); done(); }} catch (e) {{ window.prompt('Copy this:', text); }}
+        document.body.removeChild(area);
+      }}
+    }});
   }})();
 </script>
 </body>
@@ -403,11 +553,46 @@ curl -sL {REPO_URL}/raw/main/plugins/design/skills/design/SKILL.md \\
 """
 
 
+REDIRECT = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="refresh" content="0; url=/skills/#%(name)s">
+<link rel="canonical" href="/skills/">
+<title>%(name)s — Brain Protocol Skills</title>
+</head>
+<body>
+<p>The <code>%(name)s</code> skill: <a href="/skills/">see the catalogue</a>,
+or <a href="install">read the install prompt</a>.</p>
+</body>
+</html>
+"""
+
+
+def write_skill_pages(manifest, argv):
+    """One folder per skill: the install prompt, the zip, and a page that is not a 404."""
+    sources = skill_sources(argv)
+    written = 0
+    for plugin in manifest["plugins"]:
+        name = plugin["name"]
+        folder = OUT.parent / name
+        folder.mkdir(parents=True, exist_ok=True)
+        zipped = write_zip(name, sources[name], folder) if name in sources else None
+        (folder / "install").write_text(install_prompt(plugin, bool(zipped)))
+        (folder / "index.html").write_text(REDIRECT % {"name": name})
+        written += 1
+    missing = [p["name"] for p in manifest["plugins"] if p["name"] not in sources]
+    print(f"wrote {written} skill folders (install + zip + redirect)")
+    if missing:
+        print(f"  no source folder, SKILL.md link instead: {', '.join(missing)}")
+
+
 def main():
     manifest = load_manifest(sys.argv)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(render(manifest))
     print(f"wrote {OUT} ({len(manifest['plugins'])} skills, {OUT.stat().st_size // 1024} KB)")
+    write_skill_pages(manifest, sys.argv)
 
 
 if __name__ == "__main__":
