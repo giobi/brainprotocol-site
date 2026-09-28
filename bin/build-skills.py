@@ -11,6 +11,7 @@ page keeps working when GitHub does not.
 """
 import html
 import json
+import os
 import pathlib
 import sys
 import urllib.request
@@ -18,10 +19,11 @@ import urllib.request
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "skills" / "index.html"
 MANIFEST_PATH = ".claude-plugin/marketplace.json"
-MANIFEST_URL = (
-    "https://raw.githubusercontent.com/giobi/brainprotocol-skills/main/" + MANIFEST_PATH
-)
-REPO_URL = "https://github.com/giobi/brainprotocol-skills"
+# The skills repo slug. Override it when the repo is renamed:
+#   SKILLS_REPO=giobi/brainprotocol-skills python3 bin/build-skills.py
+REPO_SLUG = os.environ.get("SKILLS_REPO", "giobi/claude-skills")
+MANIFEST_URL = f"https://raw.githubusercontent.com/{REPO_SLUG}/main/{MANIFEST_PATH}"
+REPO_URL = f"https://github.com/{REPO_SLUG}"
 
 LABELS = {
     "workflow": "Thinking & Building",
@@ -314,7 +316,7 @@ def render(manifest):
   <section class="install">
     <h2>Install</h2>
     <pre><span class="c"># as a Claude Code plugin marketplace</span>
-/plugin marketplace add giobi/brainprotocol-skills
+/plugin marketplace add {REPO_SLUG}
 /plugin install design
 
 <span class="c"># or with the /brain package manager, inside any brain</span>
